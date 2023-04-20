@@ -21,42 +21,46 @@ public class SecurityConfig {
 
 	@Autowired
 	private JwtAuthenticationEntryPoint unauthorizedHandler;
-	
+
 	@Bean
 	JwtAuthenticationFilter jwtAuthenticationFilter() {
-	    return new JwtAuthenticationFilter();
+		return new JwtAuthenticationFilter();
 	}
-	
+
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
-			.csrf()
+				.csrf()
 				.disable()
-			.cors()
+				.cors()
 				.disable()
-			.exceptionHandling()
+				.exceptionHandling()
 				.authenticationEntryPoint(unauthorizedHandler)
-			.and()
+				.and()
 				.sessionManagement()
-					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			.and()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
 				.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 				.authorizeRequests()
-				.antMatchers("/api/v1/auth/**")
-					.permitAll()
+				.antMatchers("/api/v1/auth/**").permitAll()
+				.antMatchers("/**").permitAll()
+				.antMatchers("/swagger-ui.html").permitAll()
+				.antMatchers("/swagger-ui/**").permitAll()
+				.antMatchers("/v3/api-docs/**").permitAll()
+				.antMatchers("/v3/api-docs.yaml/**").permitAll()
 				.anyRequest()
-					.authenticated()
+				.authenticated()
 				.and()
-					.httpBasic();
-		
+				.httpBasic();
+
 		return http.build();
 	}
-	
+
 	@Bean
 	AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 		return config.getAuthenticationManager();
 	}
-	
+
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
