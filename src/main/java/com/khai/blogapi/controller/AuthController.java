@@ -32,7 +32,7 @@ import com.khai.blogapi.service.UserService;
 
 @RestController
 @CrossOrigin(exposedHeaders = "errors, content-type")
-@RequestMapping("api/v1/auth")
+@RequestMapping("api/auth")
 public class AuthController {
 
 	@Autowired

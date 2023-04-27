@@ -30,7 +30,7 @@ import com.khai.blogapi.utils.AppConstant;
 
 @RestController
 @CrossOrigin(exposedHeaders = "errors, content-type")
-@RequestMapping("api/v1/entities")
+@RequestMapping("api/entities")
 public class EntityController {
 
 	@Autowired
@@ -48,10 +48,10 @@ public class EntityController {
 	}
 
 	@GetMapping("/getAll")
-    public ResponseEntity<List<EntityResponse>> getEntities() {
-        List<EntityResponse> entityResponse = entityService.getEntities();
-        return new ResponseEntity<>(entityResponse, HttpStatus.OK);
-    }
+	public ResponseEntity<List<EntityResponse>> getEntities() {
+		List<EntityResponse> entityResponse = entityService.getEntities();
+		return new ResponseEntity<>(entityResponse, HttpStatus.OK);
+	}
 
 	@GetMapping("/{entity_id}")
 	public ResponseEntity<EntityResponse> getEntityById(
@@ -65,6 +65,10 @@ public class EntityController {
 	public ResponseEntity<EntityResponse> createEntity(
 			@RequestBody EntityRequest entityRequest,
 			@CurrentUser UserPrincipal userPrincipal) {
+
+		System.out.println("entityRequest..." + entityRequest);
+		System.out.println("userPrincipal..." + userPrincipal);
+
 		EntityResponse entityResponse = entityService.createEntity(entityRequest, userPrincipal);
 		return new ResponseEntity<>(entityResponse, HttpStatus.CREATED);
 	}
@@ -75,13 +79,6 @@ public class EntityController {
 			@PathVariable("entity_id") Long entityId,
 			@CurrentUser UserPrincipal userPrincipal) {
 		ApiResponse response = entityService.deleteEntityById(entityId, userPrincipal);
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
-
-	@DeleteMapping
-	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<ApiResponse> deleteAll() {
-		ApiResponse response = entityService.deleteAll();
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
