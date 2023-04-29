@@ -3,6 +3,8 @@ package com.khai.blogapi.utils;
 public class AppConstant {
 
 	public static final String CATEGORY_NOT_FOUND = "Not found category with id: ";
+	public static final String ENTITY_NOT_FOUND = "Not found entity with id: ";
+	public static final String COUNTY_NOT_FOUND = "Not found county with id: ";
 	public static final String BLOG_NOT_FOUND = "Not found blog with id: ";
 	public static final String TAG_NOT_FOUND = "Not found tag with id: ";
 	public static final String COMMENT_NOT_FOUND = "Not found comment with id: ";
@@ -11,6 +13,8 @@ public class AppConstant {
 	public static final String ROLE_NOT_FOUND_WITH_USER = "Not found role with this user has name : ";
 	
 	public static final String CATEGORY_EXIST = "This category already exist in database";
+	public static final String ENTITY_EXIST = "This entity already exist in database";
+	public static final String COUNTY_EXIST = "This county already exist in database";
 	public static final String BLOG_EXIST = "This blog already exist in database";
 	public static final String TAG_EXIST = "This tag already exist in database";
 	public static final String COMMENT_EXIST = "This comment already exist in database with id: ";

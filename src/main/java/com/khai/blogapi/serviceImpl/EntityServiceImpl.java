@@ -82,6 +82,12 @@ public class EntityServiceImpl implements EntityService {
 	}
 
 	@Override
+	public EntityRec getEntity(Long entityId) {
+		return entityRepository.findById(entityId).orElseThrow(() ->
+                new IllegalArgumentException("could not find entities with id: " + entityId));
+    }
+
+	@Override
 	public EntityResponse createEntity(EntityRequest entityRequest, UserPrincipal userPrincipal) {
 
 		EntityRec entity = modelMapper.map(entityRequest, EntityRec.class);

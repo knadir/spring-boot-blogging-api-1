@@ -5,12 +5,12 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.khai.blogapi.model.EntityRec;
+import com.khai.blogapi.model.County;
 
 @Repository
-public interface EntityRepository extends JpaRepository<EntityRec, Long> {
+public interface CountyRepository extends JpaRepository<County, Long> {
 
-	Optional<EntityRec> findByName(String name);
+	Optional<County> findByName(String name);
 
 	boolean existsByName(String name);
 

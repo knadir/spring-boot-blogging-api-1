@@ -2,6 +2,7 @@ package com.khai.blogapi.service;
 
 import java.util.List;
 
+import com.khai.blogapi.model.EntityRec;
 import com.khai.blogapi.payload.ApiResponse;
 import com.khai.blogapi.payload.EntityRequest;
 import com.khai.blogapi.payload.EntityResponse;
@@ -15,6 +16,8 @@ public interface EntityService {
 	List<EntityResponse> getEntities();
 
 	EntityResponse getEntityById(Long EntityId);
+
+	EntityRec getEntity(Long EntityId);
 
 	EntityResponse createEntity(EntityRequest EntityRequest, UserPrincipal userPrincipal);
 
