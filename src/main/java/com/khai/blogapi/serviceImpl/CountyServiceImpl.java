@@ -24,6 +24,7 @@ import com.khai.blogapi.payload.EntityResponse;
 import com.khai.blogapi.payload.PageResponse;
 import com.khai.blogapi.payload.mapper;
 import com.khai.blogapi.repository.CountyRepository;
+import com.khai.blogapi.repository.EntityRepository;
 import com.khai.blogapi.repository.UserRepository;
 import com.khai.blogapi.security.UserPrincipal;
 import com.khai.blogapi.service.CountyService;
@@ -36,6 +37,9 @@ public class CountyServiceImpl implements CountyService {
 
 	@Autowired
 	CountyRepository countyRepository;
+
+	@Autowired
+	EntityRepository entityRepository;
 
 	@Autowired
 	UserRepository userRepository;
@@ -67,19 +71,29 @@ public class CountyServiceImpl implements CountyService {
 	}
 
 	@Override
-    public List<CountyResponse> getCounties() {
-        List<County> counties = StreamSupport
-                .stream(countyRepository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
-        return mapper.countiesToCountyResponse(counties);
-    }
+	public List<CountyResponse> getCounties() {
+		List<County> counties = StreamSupport
+				.stream(countyRepository.findAll().spliterator(), false)
+				.collect(Collectors.toList());
+		return mapper.countiesToCountyResponse(counties);
+	}
 
 	@Override
 	public CountyResponse getCountyById(Long countyId) {
 		County county = countyRepository.findById(countyId)
-				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.CATEGORY_NOT_FOUND + countyId));
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.COUNTY_NOT_FOUND + countyId));
 
 		return modelMapper.map(county, CountyResponse.class);
+	}
+
+	@Override
+	public List<CountyResponse> getCountiesByEntity(Long entityId) {
+		EntityRec entity = entityRepository.findById(entityId)
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.ENTITY_NOT_FOUND + entityId));
+		List<County> counties = StreamSupport
+				.stream(countyRepository.findByEntity(entity).spliterator(), false)
+				.collect(Collectors.toList());
+		return mapper.countiesToCountyResponse(counties);
 	}
 
 	@Override
@@ -101,32 +115,38 @@ public class CountyServiceImpl implements CountyService {
 	}
 
 	@Override
+	public County getCounty(Long countyId) {
+		return countyRepository.findById(countyId)
+				.orElseThrow(() -> new IllegalArgumentException("could not find counties with id: " + countyId));
+	}
+
+	@Override
 	public ApiResponse deleteCountyById(Long countyId, UserPrincipal userPrincipal) {
 		County county = countyRepository.findById(countyId)
 				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.COUNTY_NOT_FOUND + countyId));
 
 		countyRepository.delete(county);
-		return new ApiResponse(Boolean.TRUE, AppConstant.CATEGORY_DELETE_MESSAGE, HttpStatus.OK);
+		return new ApiResponse(Boolean.TRUE, AppConstant.COUNTY_DELETE_MESSAGE, HttpStatus.OK);
 	}
 
 	@Override
 	public ApiResponse deleteAll() {
 		countyRepository.deleteAll();
-		return new ApiResponse(Boolean.TRUE, AppConstant.CATEGORY_DELETE_MESSAGE, HttpStatus.OK);
+		return new ApiResponse(Boolean.TRUE, AppConstant.COUNTY_DELETE_MESSAGE, HttpStatus.OK);
 	}
 
 	@Override
 	public CountyResponse updateCountyById(Long countyId, CountyRequest countyRequest,
 			UserPrincipal userPrincipal) {
 
-		if (countyRepository.existsByName(countyRequest.getName())) {
-			throw new ResourceExistException(AppConstant.CATEGORY_EXIST);
-		}
+		// if (countyRepository.existsByName(countyRequest.getName())) {
+		// throw new ResourceExistException(AppConstant.COUNTY_EXIST);
+		// }
 
 		modelMapper.typeMap(CountyRequest.class, County.class).addMappings(mapper -> mapper.skip(County::setId));
 
 		County county = countyRepository.findById(countyId)
-				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.CATEGORY_NOT_FOUND + countyId));
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.COUNTY_NOT_FOUND + countyId));
 
 		modelMapper.map(countyRequest, county);
 

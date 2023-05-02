@@ -2,6 +2,7 @@ package com.khai.blogapi.service;
 
 import java.util.List;
 
+import com.khai.blogapi.model.County;
 import com.khai.blogapi.payload.ApiResponse;
 import com.khai.blogapi.payload.CountyRequest;
 import com.khai.blogapi.payload.CountyResponse;
@@ -15,6 +16,10 @@ public interface CountyService {
 	List<CountyResponse> getCounties();
 
 	CountyResponse getCountyById(Long CountyId);
+
+	List<CountyResponse> getCountiesByEntity(Long EntityId);
+
+	County getCounty(Long CountyId);
 
 	CountyResponse createCounty(CountyRequest CountyRequest, UserPrincipal userPrincipal);
 

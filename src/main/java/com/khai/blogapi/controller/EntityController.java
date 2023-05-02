@@ -21,11 +21,13 @@ import com.khai.blogapi.payload.ApiResponse;
 import com.khai.blogapi.payload.BlogResponse;
 import com.khai.blogapi.payload.EntityRequest;
 import com.khai.blogapi.payload.EntityResponse;
+import com.khai.blogapi.payload.CountyResponse;
 import com.khai.blogapi.payload.PageResponse;
 import com.khai.blogapi.security.CurrentUser;
 import com.khai.blogapi.security.UserPrincipal;
 import com.khai.blogapi.service.BlogService;
 import com.khai.blogapi.service.EntityService;
+import com.khai.blogapi.service.CountyService;
 import com.khai.blogapi.utils.AppConstant;
 
 @RestController
@@ -35,6 +37,9 @@ public class EntityController {
 
 	@Autowired
 	EntityService entityService;
+
+	@Autowired
+	CountyService countyService;
 
 	@Autowired
 	BlogService blogService;
@@ -55,9 +60,17 @@ public class EntityController {
 
 	@GetMapping("/{entity_id}")
 	public ResponseEntity<EntityResponse> getEntityById(
-			@PathVariable("entity_id") Long entityId) {
+			@PathVariable("entity_id") Long entityId){
 		EntityResponse entityResponse = entityService.getEntityById(entityId);
-		return new ResponseEntity<>(entityResponse, HttpStatus.OK);
+		return new ResponseEntity<>(entityResponse,HttpStatus.OK);
+	}
+
+	@GetMapping("/{entity_id}/counties")
+	public ResponseEntity<List<CountyResponse>> getCountiesByEntity(
+			@PathVariable("entity_id") Long entityId){
+		List<CountyResponse> countyResponses = 
+				countyService.getCountiesByEntity(entityId);
+		return new ResponseEntity<>(countyResponses,HttpStatus.OK);
 	}
 
 	@PostMapping

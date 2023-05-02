@@ -76,7 +76,7 @@ public class EntityServiceImpl implements EntityService {
 	@Override
 	public EntityResponse getEntityById(Long entityId) {
 		EntityRec entity = entityRepository.findById(entityId)
-				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.CATEGORY_NOT_FOUND + entityId));
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.ENTITY_NOT_FOUND + entityId));
 
 		return modelMapper.map(entity, EntityResponse.class);
 	}
@@ -93,7 +93,7 @@ public class EntityServiceImpl implements EntityService {
 		EntityRec entity = modelMapper.map(entityRequest, EntityRec.class);
 
 		if (entityRepository.findByName(entity.getName()).isPresent()) {
-			throw new ResourceExistException(AppConstant.CATEGORY_EXIST);
+			throw new ResourceExistException(AppConstant.ENTITY_EXIST);
 		}
 
 		entityRepository.save(entity);
@@ -105,16 +105,16 @@ public class EntityServiceImpl implements EntityService {
 	@Override
 	public ApiResponse deleteEntityById(Long entityId, UserPrincipal userPrincipal) {
 		EntityRec entity = entityRepository.findById(entityId)
-				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.CATEGORY_NOT_FOUND + entityId));
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.ENTITY_NOT_FOUND + entityId));
 
 		entityRepository.delete(entity);
-		return new ApiResponse(Boolean.TRUE, AppConstant.CATEGORY_DELETE_MESSAGE, HttpStatus.OK);
+		return new ApiResponse(Boolean.TRUE, AppConstant.ENTITY_DELETE_MESSAGE, HttpStatus.OK);
 	}
 
 	@Override
 	public ApiResponse deleteAll() {
 		entityRepository.deleteAll();
-		return new ApiResponse(Boolean.TRUE, AppConstant.CATEGORY_DELETE_MESSAGE, HttpStatus.OK);
+		return new ApiResponse(Boolean.TRUE, AppConstant.ENTITY_DELETE_MESSAGE, HttpStatus.OK);
 	}
 
 	@Override
@@ -122,13 +122,13 @@ public class EntityServiceImpl implements EntityService {
 			UserPrincipal userPrincipal) {
 
 		if (entityRepository.existsByName(entityRequest.getName())) {
-			throw new ResourceExistException(AppConstant.CATEGORY_EXIST);
+			throw new ResourceExistException(AppConstant.ENTITY_EXIST);
 		}
 
 		modelMapper.typeMap(EntityRequest.class, EntityRec.class).addMappings(mapper -> mapper.skip(EntityRec::setId));
 
 		EntityRec entity = entityRepository.findById(entityId)
-				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.CATEGORY_NOT_FOUND + entityId));
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.ENTITY_NOT_FOUND + entityId));
 
 		modelMapper.map(entityRequest, entity);
 

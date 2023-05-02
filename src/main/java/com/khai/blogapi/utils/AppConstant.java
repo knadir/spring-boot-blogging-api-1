@@ -5,6 +5,7 @@ public class AppConstant {
 	public static final String CATEGORY_NOT_FOUND = "Not found category with id: ";
 	public static final String ENTITY_NOT_FOUND = "Not found entity with id: ";
 	public static final String COUNTY_NOT_FOUND = "Not found county with id: ";
+	public static final String MUNICIPALITY_NOT_FOUND = "Not found county with id: ";
 	public static final String BLOG_NOT_FOUND = "Not found blog with id: ";
 	public static final String TAG_NOT_FOUND = "Not found tag with id: ";
 	public static final String COMMENT_NOT_FOUND = "Not found comment with id: ";
@@ -15,6 +16,7 @@ public class AppConstant {
 	public static final String CATEGORY_EXIST = "This category already exist in database";
 	public static final String ENTITY_EXIST = "This entity already exist in database";
 	public static final String COUNTY_EXIST = "This county already exist in database";
+	public static final String MUNICIPALITY_EXIST = "This municipality already exist in database";
 	public static final String BLOG_EXIST = "This blog already exist in database";
 	public static final String TAG_EXIST = "This tag already exist in database";
 	public static final String COMMENT_EXIST = "This comment already exist in database with id: ";
@@ -27,6 +29,9 @@ public class AppConstant {
 	public static final Integer MAX_PAGE_SIZE = 10;
 	
 	public static final String CATEGORY_DELETE_MESSAGE = "Sucessfully delete this category";
+	public static final String ENTITY_DELETE_MESSAGE = "Sucessfully delete this entity";
+	public static final String COUNTY_DELETE_MESSAGE = "Sucessfully delete this county";
+	public static final String MUNICIPALITY_DELETE_MESSAGE = "Sucessfully delete this municipality";
 	public static final String COMMENT_DELETE_MESSAGE = "Sucessfully delete this comment";
 	public static final String TAG_DELETE_MESSAGE = "Sucessfully delete this tag";
 	public static final String BLOG_DELETE_MESSAGE = "Sucessfully delete this blog";

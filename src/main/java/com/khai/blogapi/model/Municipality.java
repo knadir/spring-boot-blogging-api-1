@@ -30,8 +30,8 @@ public class Municipality extends UserDateAudit {
 	@JoinColumn(name = "county_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_COUNTY_MUNICIPALITY"))
 	private County county;
 
-	public Municipality(String name, County county) {
-		this.name = name;
-		this.county = county;
-	}
+	// public Municipality(String name, County county) {
+	// 	this.name = name;
+	// 	this.county = county;
+	// }
 }

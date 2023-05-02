@@ -32,6 +32,13 @@ public class EntityRec extends UserDateAudit {
 
 	@OneToMany(mappedBy = "entity", fetch = FetchType.EAGER)
     private List<County> counties = new ArrayList<>();
+
+	@PreRemove
+    public void checkCountyAssociationBeforeRemoval() {
+        if (!this.counties.isEmpty()) {
+            throw new RuntimeException("Can't remove a entity that has counties !");
+        }
+    }
 	
 	public void addCounty(County county) {
         counties.add(county);

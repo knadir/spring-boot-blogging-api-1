@@ -52,6 +52,13 @@ public class CountyController {
 		return new ResponseEntity<>(countyResponse, HttpStatus.OK);
 	}
 
+	@GetMapping("/getEntity/{entity_id}")
+	public ResponseEntity<CountyResponse> getCountyByEntityId(
+			@PathVariable("entity_id") Long countyId) {
+		CountyResponse countyResponse = countyService.getCountyById(countyId);
+		return new ResponseEntity<>(countyResponse, HttpStatus.OK);
+	}
+
 	@GetMapping("/{county_id}")
 	public ResponseEntity<CountyResponse> getCountyById(
 			@PathVariable("county_id") Long countyId) {

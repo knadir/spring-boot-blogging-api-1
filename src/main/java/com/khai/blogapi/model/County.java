@@ -38,15 +38,22 @@ public class County extends UserDateAudit {
 	@OneToMany(mappedBy = "county", fetch = FetchType.EAGER)
 	private List<Municipality> municipalities = new ArrayList<>();
 
+	@PreRemove
+    public void checkMunicipalityAssociationBeforeRemoval() {
+        if (!this.municipalities.isEmpty()) {
+            throw new RuntimeException("Can't remove a county that has municipalities !");
+        }
+    }
+
 	public void addMunicipality(Municipality municipality) {
 		municipalities.add(municipality);
 		((Municipality) municipalities).setCounty(this);
 	}
 
 	public County(String name, List<Municipality> municipalities) {
-        this.name = name;
-        this.municipalities = municipalities;
-    }
+		this.name = name;
+		this.municipalities = municipalities;
+	}
 
 	public void removeMunicipality(Municipality municipality) {
 		municipalities.remove(municipality);
