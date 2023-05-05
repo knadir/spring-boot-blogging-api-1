@@ -2,6 +2,7 @@ package com.khai.blogapi.service;
 
 import java.util.List;
 
+import com.khai.blogapi.model.Municipality;
 import com.khai.blogapi.payload.ApiResponse;
 import com.khai.blogapi.payload.MunicipalityRequest;
 import com.khai.blogapi.payload.MunicipalityResponse;
@@ -15,6 +16,8 @@ public interface MunicipalityService {
 	List<MunicipalityResponse> getMunicipalities();
 
 	MunicipalityResponse getMunicipalityById(Long MunicipalityId);
+
+	Municipality getMunicipality(Long MunicipalityId);
 
 	MunicipalityResponse createMunicipality(MunicipalityRequest MunicipalityRequest, UserPrincipal userPrincipal);
 

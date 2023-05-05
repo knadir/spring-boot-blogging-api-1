@@ -13,5 +13,4 @@ public interface EntityRepository extends JpaRepository<EntityRec, Long> {
 	Optional<EntityRec> findByName(String name);
 
 	boolean existsByName(String name);
-
 }

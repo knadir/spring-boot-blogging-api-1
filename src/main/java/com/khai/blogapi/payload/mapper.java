@@ -6,6 +6,8 @@ import com.khai.blogapi.payload.CountyResponse;
 import com.khai.blogapi.model.County;
 import com.khai.blogapi.payload.MunicipalityResponse;
 import com.khai.blogapi.model.Municipality;
+import com.khai.blogapi.payload.EmployerResponse;
+import com.khai.blogapi.model.Employer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,5 +62,23 @@ public class mapper {
             municipalityResponse.add(municipalityToMunicipalityResponse(municipality));
         }
         return municipalityResponse;
+    }
+    
+    public static EmployerResponse employerToEmployerResponse(Employer employer) {
+        EmployerResponse employerResponse = new EmployerResponse();
+        employerResponse.setId(employer.getId());
+        employerResponse.setName(employer.getName());
+        employerResponse.setFirstName(employer.getFirstName());
+        employerResponse.setMunicipalityId(employer.getMunicipality().getId());
+        employerResponse.setMunicipalityName(employer.getMunicipality().getName());
+        return employerResponse;
+    }
+
+    public static List<EmployerResponse> employersToEmployerResponse(List<Employer> employers) {
+        List<EmployerResponse> employerResponse = new ArrayList<>();
+        for (Employer employer : employers) {
+            employerResponse.add(employerToEmployerResponse(employer));
+        }
+        return employerResponse;
     }
 }

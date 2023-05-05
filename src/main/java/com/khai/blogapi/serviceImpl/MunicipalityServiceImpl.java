@@ -82,12 +82,18 @@ public class MunicipalityServiceImpl implements MunicipalityService {
 	}
 
 	@Override
+	public Municipality getMunicipality(Long municipalityId) {
+		return municipalityRepository.findById(municipalityId)
+				.orElseThrow(() -> new IllegalArgumentException("could not find municipalities with id: " + municipalityId));
+	}
+
+	@Override
 	public MunicipalityResponse createMunicipality(MunicipalityRequest municipalityRequest, UserPrincipal userPrincipal) {
 
 		Municipality municipality = modelMapper.map(municipalityRequest, Municipality.class);
 
 		if (municipalityRepository.findByName(municipality.getName()).isPresent()) {
-			throw new ResourceExistException(AppConstant.COUNTY_EXIST);
+			throw new ResourceExistException(AppConstant.MUNICIPALITY_EXIST);
 		}
 
 		County county = countyService.getCounty(municipalityRequest.getCountyId());
@@ -102,7 +108,7 @@ public class MunicipalityServiceImpl implements MunicipalityService {
 	@Override
 	public ApiResponse deleteMunicipalityById(Long municipalityId, UserPrincipal userPrincipal) {
 		Municipality municipality = municipalityRepository.findById(municipalityId)
-				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.COUNTY_NOT_FOUND + municipalityId));
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.MUNICIPALITY_NOT_FOUND + municipalityId));
 
 		municipalityRepository.delete(municipality);
 		return new ApiResponse(Boolean.TRUE, AppConstant.MUNICIPALITY_DELETE_MESSAGE, HttpStatus.OK);
