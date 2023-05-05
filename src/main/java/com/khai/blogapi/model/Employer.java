@@ -25,10 +25,6 @@ public class Employer extends UserDateAudit {
 	@SequenceGenerator(name = "employers_id_seq", allocationSize = 1)
 	private Long id;
 
-	@Column(name = "name")
-	@NotEmpty
-	private String name;
-
 	@Column(name = "first_name")
 	@NotEmpty
 	private String firstName;

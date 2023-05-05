@@ -10,7 +10,6 @@ import lombok.EqualsAndHashCode;
 public class EmployerResponse extends UserDateAudit{
 	private static final long serialVersionUID = 1L;
 	private Long id;
-	private String name;
 	private String firstName;
 	private String lastName;
 	private Long municipalityId;

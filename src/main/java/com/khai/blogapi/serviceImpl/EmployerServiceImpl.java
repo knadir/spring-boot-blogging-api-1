@@ -92,9 +92,9 @@ public class EmployerServiceImpl implements EmployerService {
 
 		Employer employer = modelMapper.map(employerRequest, Employer.class);
 
-		if (employerRepository.findByName(employer.getName()).isPresent()) {
-			throw new ResourceExistException(AppConstant.MUNICIPALITY_EXIST);
-		}
+		// if (employerRepository.findByName(employer.getName()).isPresent()) {
+		// 	throw new ResourceExistException(AppConstant.EMPLOYER_EXIST);
+		// }
 
 		Municipality county = countyService.getMunicipality(employerRequest.getMunicipalityId());
 		employer.setMunicipality(county);

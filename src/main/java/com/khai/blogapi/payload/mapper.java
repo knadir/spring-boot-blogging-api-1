@@ -67,7 +67,6 @@ public class mapper {
     public static EmployerResponse employerToEmployerResponse(Employer employer) {
         EmployerResponse employerResponse = new EmployerResponse();
         employerResponse.setId(employer.getId());
-        employerResponse.setName(employer.getName());
         employerResponse.setFirstName(employer.getFirstName());
         employerResponse.setLastName(employer.getLastName());
         employerResponse.setMunicipalityId(employer.getMunicipality().getId());

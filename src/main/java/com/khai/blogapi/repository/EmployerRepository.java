@@ -10,8 +10,7 @@ import com.khai.blogapi.model.Employer;
 @Repository
 public interface EmployerRepository extends JpaRepository<Employer, Long> {
 
-	Optional<Employer> findByName(String name);
-	boolean existsByName(String name);
+	Optional<Employer> findByFirstName(String firstName);
 	boolean existsByFirstName(String firstName);
 	boolean existsByLastName(String lastName);
 	boolean existsByMunicipalityId(Long municipalityIf);
