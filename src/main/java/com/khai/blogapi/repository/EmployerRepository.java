@@ -13,6 +13,7 @@ public interface EmployerRepository extends JpaRepository<Employer, Long> {
 	Optional<Employer> findByName(String name);
 	boolean existsByName(String name);
 	boolean existsByFirstName(String firstName);
+	boolean existsByLastName(String lastName);
 	boolean existsByMunicipalityId(Long municipalityIf);
 
 }
