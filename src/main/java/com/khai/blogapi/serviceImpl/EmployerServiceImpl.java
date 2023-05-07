@@ -43,7 +43,7 @@ public class EmployerServiceImpl implements EmployerService {
 	ModelMapper modelMapper;
 
 	@Autowired
-	MunicipalityService countyService;
+	MunicipalityService municipalityService;
 
 	@Override
 	public PageResponse<EmployerResponse> getAllEmployers(Integer page, Integer size) {
@@ -76,7 +76,7 @@ public class EmployerServiceImpl implements EmployerService {
 	@Override
 	public EmployerResponse getEmployerById(Long employerId) {
 		Employer employer = employerRepository.findById(employerId)
-				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.MUNICIPALITY_NOT_FOUND + employerId));
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.EMPLOYER_NOT_FOUND + employerId));
 
 		return modelMapper.map(employer, EmployerResponse.class);
 	}
@@ -96,8 +96,11 @@ public class EmployerServiceImpl implements EmployerService {
 		// 	throw new ResourceExistException(AppConstant.EMPLOYER_EXIST);
 		// }
 
-		Municipality county = countyService.getMunicipality(employerRequest.getMunicipalityId());
-		employer.setMunicipality(county);
+		Municipality municipality = municipalityService.getMunicipality(employerRequest.getMunicipalityId());
+		employer.setMunicipality(municipality);
+
+		Municipality municipalityAddr = municipalityService.getMunicipality(employerRequest.getMunicipalityAddrId());
+		employer.setMunicipalityAddr(municipalityAddr);
 
 		employerRepository.save(employer);
 
@@ -108,16 +111,16 @@ public class EmployerServiceImpl implements EmployerService {
 	@Override
 	public ApiResponse deleteEmployerById(Long employerId, UserPrincipal userPrincipal) {
 		Employer employer = employerRepository.findById(employerId)
-				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.MUNICIPALITY_NOT_FOUND + employerId));
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.EMPLOYER_NOT_FOUND + employerId));
 
 		employerRepository.delete(employer);
-		return new ApiResponse(Boolean.TRUE, AppConstant.MUNICIPALITY_DELETE_MESSAGE, HttpStatus.OK);
+		return new ApiResponse(Boolean.TRUE, AppConstant.EMPLOYER_DELETE_MESSAGE, HttpStatus.OK);
 	}
 
 	@Override
 	public ApiResponse deleteAll() {
 		employerRepository.deleteAll();
-		return new ApiResponse(Boolean.TRUE, AppConstant.MUNICIPALITY_DELETE_MESSAGE, HttpStatus.OK);
+		return new ApiResponse(Boolean.TRUE, AppConstant.EMPLOYER_DELETE_MESSAGE, HttpStatus.OK);
 	}
 
 	@Override

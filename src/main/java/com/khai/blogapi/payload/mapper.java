@@ -71,6 +71,8 @@ public class mapper {
         employerResponse.setLastName(employer.getLastName());
         employerResponse.setMunicipalityId(employer.getMunicipality().getId());
         employerResponse.setMunicipalityName(employer.getMunicipality().getName());
+        employerResponse.setMunicipalityAddrId(employer.getMunicipalityAddr().getId());
+        employerResponse.setMunicipalityAddrName(employer.getMunicipalityAddr().getName());
         return employerResponse;
     }
 

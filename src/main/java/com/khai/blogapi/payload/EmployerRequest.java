@@ -7,4 +7,5 @@ public class EmployerRequest {
 	private String firstName;
 	private String lastName;
 	private Long municipalityId;
+	private Long municipalityAddrId;
 }
