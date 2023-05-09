@@ -34,8 +34,8 @@ public class Employer extends UserDateAudit {
 	private String lastName;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "municipality_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_MUNICIPALITY_EMPLOYER"))
-	private Municipality municipality;
+	@JoinColumn(name = "municipality_born_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_MUNICIPALITY_EMPLOYER"))
+	private Municipality municipalityBorn;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "municipality_addr_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_MUNICIPALITY_EMPLOYER_ADDR"))

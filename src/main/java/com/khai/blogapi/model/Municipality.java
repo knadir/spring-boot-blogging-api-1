@@ -29,8 +29,11 @@ public class Municipality extends UserDateAudit {
 	@NotEmpty
 	private String name;
 
-	@OneToMany(mappedBy = "municipality", fetch = FetchType.EAGER)
-	private List<Employer> employers = new ArrayList<>();
+	@OneToMany(mappedBy = "municipalityBorn", fetch = FetchType.EAGER)
+	private List<Employer> employerBorns = new ArrayList<>();
+
+	@OneToMany(mappedBy = "municipalityAddr", fetch = FetchType.EAGER)
+	private List<Employer> employerAddrs= new ArrayList<>();
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "county_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_COUNTY_MUNICIPALITY"))
@@ -38,7 +41,7 @@ public class Municipality extends UserDateAudit {
 
 	@PreRemove
 	public void checkEmployerBornsAssociationBeforeRemoval() {
-		if (!this.employers.isEmpty() || !this.employers.isEmpty()) {
+		if (!this.employerBorns.isEmpty() || !this.employerAddrs.isEmpty()) {
 			throw new RuntimeException("Can't remove a municipality that has employers municipalities !");
 		}
 	}

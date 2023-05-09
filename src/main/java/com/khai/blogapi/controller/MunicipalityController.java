@@ -53,7 +53,7 @@ public class MunicipalityController {
 	}
 
 	@GetMapping("/{municipality_id}")
-	public ResponseEntity<MunicipalityResponse> getMunicipalityById(
+	public ResponseEntity<MunicipalityResponse> getMunicipality(
 			@PathVariable("municipality_id") Long municipalityId) {
 		MunicipalityResponse municipalityResponse = municipalityService.getMunicipalityById(municipalityId);
 		return new ResponseEntity<>(municipalityResponse, HttpStatus.OK);

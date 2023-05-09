@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -89,15 +90,21 @@ public class EmployerServiceImpl implements EmployerService {
 
 	@Override
 	public EmployerResponse createEmployer(EmployerRequest employerRequest, UserPrincipal userPrincipal) {
+		System.out.println("employerRequest..." + employerRequest);
+		System.out.println("userPrincipal..." + userPrincipal);
 
-		Employer employer = modelMapper.map(employerRequest, Employer.class);
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+
+		Employer employer = modelMapper.map(employerRequest, Employer.class); 
+
+		System.out.println("employer..." + employer);
 
 		// if (employerRepository.findByName(employer.getName()).isPresent()) {
-		// 	throw new ResourceExistException(AppConstant.EMPLOYER_EXIST);
+		// throw new ResourceExistException(AppConstant.EMPLOYER_EXIST);
 		// }
 
-		Municipality municipality = municipalityService.getMunicipality(employerRequest.getMunicipalityId());
-		employer.setMunicipality(municipality);
+		Municipality municipalityBorn = municipalityService.getMunicipality(employerRequest.getMunicipalityBornId());
+		employer.setMunicipalityBorn(municipalityBorn);
 
 		Municipality municipalityAddr = municipalityService.getMunicipality(employerRequest.getMunicipalityAddrId());
 		employer.setMunicipalityAddr(municipalityAddr);
@@ -128,8 +135,10 @@ public class EmployerServiceImpl implements EmployerService {
 			UserPrincipal userPrincipal) {
 
 		// if ((employerRepository.existsByName(employerRequest.getName()))
-		// 		&& (employerRepository.existsByMunicipalityId(employerRequest.getMunicipalityId()))) {
-		// 	throw new ResourceExistException(AppConstant.EMPLOYER_EXIST);
+		// &&
+		// (employerRepository.existsByMunicipalityId(employerRequest.getMunicipalityId())))
+		// {
+		// throw new ResourceExistException(AppConstant.EMPLOYER_EXIST);
 		// }
 
 		modelMapper.typeMap(EmployerRequest.class, Employer.class).addMappings(mapper -> mapper.skip(Employer::setId));

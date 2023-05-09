@@ -17,8 +17,8 @@ public class AppConstant {
 	public static final String CATEGORY_EXIST = "This category already exist in database";
 	public static final String ENTITY_EXIST = "This entity already exist in database";
 	public static final String COUNTY_EXIST = "This county already exist in database";
-	public static final String MUNICIPALITY_EXIST = "This employer already exist in database";
-	public static final String EMPLOYER_EXIST = "This municipality already exist in database";
+	public static final String MUNICIPALITY_EXIST = "This municipality already exist in database";
+	public static final String EMPLOYER_EXIST = "This employer already exist in database";
 	public static final String BLOG_EXIST = "This blog already exist in database";
 	public static final String TAG_EXIST = "This tag already exist in database";
 	public static final String COMMENT_EXIST = "This comment already exist in database with id: ";

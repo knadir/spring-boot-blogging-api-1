@@ -124,9 +124,9 @@ public class MunicipalityServiceImpl implements MunicipalityService {
 	public MunicipalityResponse updateMunicipalityById(Long municipalityId, MunicipalityRequest municipalityRequest,
 			UserPrincipal userPrincipal) {
 
-		if (municipalityRepository.existsByName(municipalityRequest.getName())) {
-			throw new ResourceExistException(AppConstant.MUNICIPALITY_EXIST);
-		}
+		// if (municipalityRepository.existsByName(municipalityRequest.getName())) {
+		// 	throw new ResourceExistException(AppConstant.MUNICIPALITY_EXIST);
+		// }
 
 		modelMapper.typeMap(MunicipalityRequest.class, Municipality.class).addMappings(mapper -> mapper.skip(Municipality::setId));
 
