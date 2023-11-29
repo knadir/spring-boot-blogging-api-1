@@ -1,12 +1,8 @@
 package com.khai.blogapi.payload;
 
-import com.khai.blogapi.payload.EntityResponse;
 import com.khai.blogapi.model.EntityRec;
-import com.khai.blogapi.payload.CountyResponse;
 import com.khai.blogapi.model.County;
-import com.khai.blogapi.payload.MunicipalityResponse;
 import com.khai.blogapi.model.Municipality;
-import com.khai.blogapi.payload.EmployerResponse;
 import com.khai.blogapi.model.Employer;
 
 import java.util.ArrayList;
@@ -69,10 +65,14 @@ public class mapper {
         employerResponse.setId(employer.getId());
         employerResponse.setFirstName(employer.getFirstName());
         employerResponse.setLastName(employer.getLastName());
+        employerResponse.setFatherName(employer.getFatherName());
+        employerResponse.setIdentificationNumber(employer.getIdentificationNumber());
         employerResponse.setMunicipalityBornId(employer.getMunicipalityBorn().getId());
         employerResponse.setMunicipalityBornName(employer.getMunicipalityBorn().getName());
+        employerResponse.setPlaceBorn(employer.getPlaceBorn());
         employerResponse.setMunicipalityAddrId(employer.getMunicipalityAddr().getId());
         employerResponse.setMunicipalityAddrName(employer.getMunicipalityAddr().getName());
+        employerResponse.setPlaceAddr(employer.getPlaceAddr());
         return employerResponse;
     }
 

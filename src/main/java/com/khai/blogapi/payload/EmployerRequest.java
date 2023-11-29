@@ -6,6 +6,10 @@ import lombok.Data;
 public class EmployerRequest {
 	private String firstName;
 	private String lastName;
+	private String fatherName;
+	private String identificationNumber;
+	private String placeBorn;
 	private Long municipalityBornId;
+	private String placeAddr;
 	private Long municipalityAddrId;
 }

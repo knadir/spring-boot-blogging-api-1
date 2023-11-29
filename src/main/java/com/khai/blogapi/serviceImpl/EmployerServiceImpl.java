@@ -78,8 +78,9 @@ public class EmployerServiceImpl implements EmployerService {
 	public EmployerResponse getEmployerById(Long employerId) {
 		Employer employer = employerRepository.findById(employerId)
 				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.EMPLOYER_NOT_FOUND + employerId));
-
-		return modelMapper.map(employer, EmployerResponse.class);
+		// modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		// return modelMapper.map(employer, EmployerResponse.class);
+		return mapper.employerToEmployerResponse(employer);
 	}
 
 	@Override
@@ -95,7 +96,7 @@ public class EmployerServiceImpl implements EmployerService {
 
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
-		Employer employer = modelMapper.map(employerRequest, Employer.class); 
+		Employer employer = modelMapper.map(employerRequest, Employer.class);
 
 		System.out.println("employer..." + employer);
 
@@ -140,7 +141,7 @@ public class EmployerServiceImpl implements EmployerService {
 		// {
 		// throw new ResourceExistException(AppConstant.EMPLOYER_EXIST);
 		// }
-
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		modelMapper.typeMap(EmployerRequest.class, Employer.class).addMappings(mapper -> mapper.skip(Employer::setId));
 
 		Employer employer = employerRepository.findById(employerId)
@@ -151,6 +152,5 @@ public class EmployerServiceImpl implements EmployerService {
 		employerRepository.save(employer);
 
 		return modelMapper.map(employer, EmployerResponse.class);
-
 	}
 }

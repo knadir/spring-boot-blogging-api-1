@@ -12,8 +12,12 @@ public class EmployerResponse extends UserDateAudit{
 	private Long id;
 	private String firstName;
 	private String lastName;
+	private String fatherName;
+	private String identificationNumber;
 	private Long municipalityBornId;
     private String municipalityBornName;
+	private String placeBorn;
 	private Long municipalityAddrId;
     private String municipalityAddrName;
+	private String placeAddr;	
 }

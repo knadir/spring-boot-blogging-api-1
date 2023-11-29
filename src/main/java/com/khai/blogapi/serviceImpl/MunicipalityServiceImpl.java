@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -66,29 +67,33 @@ public class MunicipalityServiceImpl implements MunicipalityService {
 	}
 
 	@Override
-    public List<MunicipalityResponse> getMunicipalities() {
-        List<Municipality> municipalities = StreamSupport
-                .stream(municipalityRepository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
-        return mapper.municipalitiesToMunicipalityResponse(municipalities);
-    }
+	public List<MunicipalityResponse> getMunicipalities() {
+		List<Municipality> municipalities = StreamSupport
+				.stream(municipalityRepository.findAll().spliterator(), false)
+				.collect(Collectors.toList());
+		return mapper.municipalitiesToMunicipalityResponse(municipalities);
+	}
 
 	@Override
 	public MunicipalityResponse getMunicipalityById(Long municipalityId) {
 		Municipality municipality = municipalityRepository.findById(municipalityId)
 				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.MUNICIPALITY_NOT_FOUND + municipalityId));
-
-		return modelMapper.map(municipality, MunicipalityResponse.class);
+				System.out.println("nadir");
+		// modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		// return modelMapper.map(municipality, MunicipalityResponse.class);
+		return mapper.municipalityToMunicipalityResponse(municipality);
 	}
 
 	@Override
 	public Municipality getMunicipality(Long municipalityId) {
 		return municipalityRepository.findById(municipalityId)
-				.orElseThrow(() -> new IllegalArgumentException("could not find municipalities with id: " + municipalityId));
+				.orElseThrow(
+						() -> new IllegalArgumentException("could not find municipalities with id: " + municipalityId));
 	}
 
 	@Override
-	public MunicipalityResponse createMunicipality(MunicipalityRequest municipalityRequest, UserPrincipal userPrincipal) {
+	public MunicipalityResponse createMunicipality(MunicipalityRequest municipalityRequest,
+			UserPrincipal userPrincipal) {
 
 		Municipality municipality = modelMapper.map(municipalityRequest, Municipality.class);
 
@@ -125,10 +130,11 @@ public class MunicipalityServiceImpl implements MunicipalityService {
 			UserPrincipal userPrincipal) {
 
 		// if (municipalityRepository.existsByName(municipalityRequest.getName())) {
-		// 	throw new ResourceExistException(AppConstant.MUNICIPALITY_EXIST);
+		// throw new ResourceExistException(AppConstant.MUNICIPALITY_EXIST);
 		// }
 
-		modelMapper.typeMap(MunicipalityRequest.class, Municipality.class).addMappings(mapper -> mapper.skip(Municipality::setId));
+		modelMapper.typeMap(MunicipalityRequest.class, Municipality.class)
+				.addMappings(mapper -> mapper.skip(Municipality::setId));
 
 		Municipality municipality = municipalityRepository.findById(municipalityId)
 				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.MUNICIPALITY_NOT_FOUND + municipalityId));
