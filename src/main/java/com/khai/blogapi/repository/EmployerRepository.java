@@ -16,4 +16,6 @@ public interface EmployerRepository extends JpaRepository<Employer, Long> {
   boolean existsByPlaceBorn(String placeBorn);
   boolean existsByMunicipalityAddrId(Long municipalityId);
   boolean existsByPlaceAddr(String placeAddr);
+  boolean existsByStreet(String street);
+  boolean existsByStreetNumber(String streetNumber);
 }
