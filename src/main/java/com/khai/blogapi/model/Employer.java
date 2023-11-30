@@ -74,6 +74,14 @@ public class Employer extends UserDateAudit {
     foreignKey = @ForeignKey(name = "FK_MUNICIPALITY_EMPLOYER_ADDR")
   )
   private Municipality municipalityAddr;
+  
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(
+    name = "gender_id",
+    referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_GENDER_EMPLOYER")
+  )
+  private Gender gender;
   // public Employer(String name, County county) {
   // 	this.name = name;
   // 	this.county = county;

@@ -4,6 +4,7 @@ import com.khai.blogapi.model.County;
 import com.khai.blogapi.model.Employer;
 import com.khai.blogapi.model.EntityRec;
 import com.khai.blogapi.model.Municipality;
+import com.khai.blogapi.model.Gender;
 import java.util.ArrayList;
 import java.util.List;
 
