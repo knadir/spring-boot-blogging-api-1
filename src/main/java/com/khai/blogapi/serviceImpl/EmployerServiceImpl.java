@@ -18,7 +18,6 @@ import com.khai.blogapi.exception.ResourceExistException;
 import com.khai.blogapi.exception.ResourceNotFoundException;
 import com.khai.blogapi.model.Employer;
 import com.khai.blogapi.model.Municipality;
-import com.khai.blogapi.model.Gender;
 import com.khai.blogapi.payload.ApiResponse;
 import com.khai.blogapi.payload.EmployerRequest;
 import com.khai.blogapi.payload.EmployerResponse;
@@ -29,7 +28,6 @@ import com.khai.blogapi.repository.UserRepository;
 import com.khai.blogapi.security.UserPrincipal;
 import com.khai.blogapi.service.EmployerService;
 import com.khai.blogapi.service.MunicipalityService;
-import com.khai.blogapi.service.GenderService;
 import com.khai.blogapi.utils.AppConstant;
 import com.khai.blogapi.utils.AppUtils;
 
@@ -47,9 +45,6 @@ public class EmployerServiceImpl implements EmployerService {
 
 	@Autowired
 	MunicipalityService municipalityService;
-
-	@Autowired
-	GenderService genderService;
 
 	@Override
 	public PageResponse<EmployerResponse> getAllEmployers(Integer page, Integer size) {
@@ -114,9 +109,6 @@ public class EmployerServiceImpl implements EmployerService {
 
 		Municipality municipalityAddr = municipalityService.getMunicipality(employerRequest.getMunicipalityAddrId());
 		employer.setMunicipalityAddr(municipalityAddr);
-
-		Gender gender = genderService.getGender(employerRequest.getGenderId());
-		employer.setGender(gender);
 
 		employerRepository.save(employer);
 

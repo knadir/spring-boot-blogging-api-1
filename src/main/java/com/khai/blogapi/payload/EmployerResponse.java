@@ -22,7 +22,4 @@ public class EmployerResponse extends UserDateAudit {
   private String placeAddr;
   private String street;
   private String streetNumber;
-  private Long genderId;
-  private String genderName;
-  
 }

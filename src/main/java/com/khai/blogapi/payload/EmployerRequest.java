@@ -15,6 +15,4 @@ public class EmployerRequest {
   private Long municipalityAddrId;
   private String street;
   private String streetNumber;
-  private Long genderId;
-  
 }

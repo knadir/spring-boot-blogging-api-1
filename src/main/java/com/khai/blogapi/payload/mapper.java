@@ -71,27 +71,6 @@ public class mapper {
     return municipalityResponse;
   }
 
-  public static GenderResponse genderToGenderResponse(
-    Gender gender
-  ) {
-    GenderResponse genderResponse = new GenderResponse();
-    genderResponse.setId(gender.getId());
-    genderResponse.setName(gender.getName());
-    return genderResponse;
-  }
-
-  public static List<GenderResponse> gendersToGenderResponse(
-    List<Gender> genders
-  ) {
-    List<GenderResponse> genderResponse = new ArrayList<>();
-    for (Gender gender: genders) {
-      genderResponse.add(
-        genderToGenderResponse(gender)
-      );
-    }
-    return genderResponse;
-  }
-
   public static EmployerResponse employerToEmployerResponse(Employer employer) {
     EmployerResponse employerResponse = new EmployerResponse();
     employerResponse.setId(employer.getId());
@@ -117,13 +96,6 @@ public class mapper {
     employerResponse.setPlaceAddr(employer.getPlaceAddr());
     employerResponse.setStreet(employer.getStreet());
     employerResponse.setStreetNumber(employer.getStreetNumber());
-    employerResponse.setGenderId(
-      employer.getGender().getId()
-    );
-    employerResponse.setGenderName(
-      employer.getGender().getName()
-    );
-    
     return employerResponse;
   }
 
