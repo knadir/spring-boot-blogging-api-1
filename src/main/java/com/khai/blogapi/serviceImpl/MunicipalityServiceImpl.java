@@ -77,8 +77,7 @@ public class MunicipalityServiceImpl implements MunicipalityService {
 	@Override
 	public MunicipalityResponse getMunicipalityById(Long municipalityId) {
 		Municipality municipality = municipalityRepository.findById(municipalityId)
-				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.MUNICIPALITY_NOT_FOUND + municipalityId));
-				System.out.println("nadir");
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.MUNICIPALITY_NOT_FOUND + municipalityId));				
 		// modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		// return modelMapper.map(municipality, MunicipalityResponse.class);
 		return mapper.municipalityToMunicipalityResponse(municipality);

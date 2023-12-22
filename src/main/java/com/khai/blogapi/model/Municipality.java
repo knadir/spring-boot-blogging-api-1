@@ -29,7 +29,7 @@ public class Municipality extends UserDateAudit {
 	@NotEmpty
 	private String name;
 
-	@OneToMany(mappedBy = "municipalityBorn", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "municipalityBorn", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Employer> employerBorns = new ArrayList<>();
 
 	@OneToMany(mappedBy = "municipalityAddr", fetch = FetchType.EAGER)

@@ -6,6 +6,8 @@ public class AppConstant {
 	public static final String ENTITY_NOT_FOUND = "Not found entity with id: ";
 	public static final String COUNTY_NOT_FOUND = "Not found county with id: ";
 	public static final String MUNICIPALITY_NOT_FOUND = "Not found municipality with id: ";
+	public static final String GENDER_NOT_FOUND = "Not found gender with id: ";
+	public static final String QUALIFICATION_NOT_FOUND = "Not found qualification with id: ";
 	public static final String EMPLOYER_NOT_FOUND = "Not found emplyer with id: ";
 	public static final String BLOG_NOT_FOUND = "Not found blog with id: ";
 	public static final String TAG_NOT_FOUND = "Not found tag with id: ";
@@ -18,6 +20,8 @@ public class AppConstant {
 	public static final String ENTITY_EXIST = "This entity already exist in database";
 	public static final String COUNTY_EXIST = "This county already exist in database";
 	public static final String MUNICIPALITY_EXIST = "This municipality already exist in database";
+	public static final String GENDER_EXIST = "This gender already exist in database";
+	public static final String QUALIFICATION_EXIST = "This qualification already exist in database";
 	public static final String EMPLOYER_EXIST = "This employer already exist in database";
 	public static final String BLOG_EXIST = "This blog already exist in database";
 	public static final String TAG_EXIST = "This tag already exist in database";
@@ -34,6 +38,8 @@ public class AppConstant {
 	public static final String ENTITY_DELETE_MESSAGE = "Sucessfully delete this entity";
 	public static final String COUNTY_DELETE_MESSAGE = "Sucessfully delete this county";
 	public static final String MUNICIPALITY_DELETE_MESSAGE = "Sucessfully delete this municipality";
+	public static final String GENDER_DELETE_MESSAGE = "Sucessfully delete this gender";
+	public static final String QUALIFICATION_DELETE_MESSAGE = "Sucessfully delete this qualification";
 	public static final String EMPLOYER_DELETE_MESSAGE = "Sucessfully delete this employer";
 	public static final String COMMENT_DELETE_MESSAGE = "Sucessfully delete this comment";
 	public static final String TAG_DELETE_MESSAGE = "Sucessfully delete this tag";

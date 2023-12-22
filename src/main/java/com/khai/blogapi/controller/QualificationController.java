@@ -18,77 +18,77 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.khai.blogapi.payload.ApiResponse;
-import com.khai.blogapi.payload.MunicipalityRequest;
-import com.khai.blogapi.payload.MunicipalityResponse;
+import com.khai.blogapi.payload.QualificationRequest;
+import com.khai.blogapi.payload.QualificationResponse;
 import com.khai.blogapi.payload.PageResponse;
 import com.khai.blogapi.security.CurrentUser;
 import com.khai.blogapi.security.UserPrincipal;
 import com.khai.blogapi.service.BlogService;
-import com.khai.blogapi.service.MunicipalityService;
+import com.khai.blogapi.service.QualificationService;
 import com.khai.blogapi.utils.AppConstant;
 
 @RestController
 @CrossOrigin(exposedHeaders = "errors, content-type")
-@RequestMapping("api/municipalities")
-public class MunicipalityController {
+@RequestMapping("api/qualifications")
+public class QualificationController {
 
 	@Autowired
-	MunicipalityService municipalityService;
+	QualificationService qualificationService;
 
 	@Autowired
 	BlogService blogService;
 
 	@GetMapping
-	public ResponseEntity<PageResponse<MunicipalityResponse>> getAllMunicipalities(
+	public ResponseEntity<PageResponse<QualificationResponse>> getAllQualifications(
 			@RequestParam(value = "page", defaultValue = AppConstant.DEFAULT_PAGE_NUMBER) Integer page,
 			@RequestParam(value = "size", defaultValue = AppConstant.DEFAULT_PAGE_SIZE) Integer size) {
-		PageResponse<MunicipalityResponse> municipalityResponse = municipalityService.getAllMunicipalities(page, size);
-		return new ResponseEntity<>(municipalityResponse, HttpStatus.OK);
+		PageResponse<QualificationResponse> qualificationResponse = qualificationService.getAllQualifications(page, size);
+		return new ResponseEntity<>(qualificationResponse, HttpStatus.OK);
 	}
 
 	@GetMapping("/getAll")
-	public ResponseEntity<List<MunicipalityResponse>> getMunicipalities() {
-		List<MunicipalityResponse> municipalityResponse = municipalityService.getMunicipalities();
-		return new ResponseEntity<>(municipalityResponse, HttpStatus.OK);
+	public ResponseEntity<List<QualificationResponse>> getQualifications() {
+		List<QualificationResponse> qualificationResponse = qualificationService.getQualifications();
+		return new ResponseEntity<>(qualificationResponse, HttpStatus.OK);
 	}
 
-	@GetMapping("/{municipality_id}")
-	public ResponseEntity<MunicipalityResponse> getMunicipalityById(
-			@PathVariable("municipality_id") Long municipalityId) {
-		MunicipalityResponse municipalityResponse = municipalityService.getMunicipalityById(municipalityId);
-		return new ResponseEntity<>(municipalityResponse, HttpStatus.OK);
+	@GetMapping("/{qualification_id}")
+	public ResponseEntity<QualificationResponse> getQualificationById(
+			@PathVariable("qualification_id") Long qualificationId) {
+		QualificationResponse qualificationResponse = qualificationService.getQualificationById(qualificationId);
+		return new ResponseEntity<>(qualificationResponse, HttpStatus.OK);
 	}
 
 	@PostMapping
 	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-	public ResponseEntity<MunicipalityResponse> createMunicipality(
-			@RequestBody final MunicipalityRequest municipalityRequest,
+	public ResponseEntity<QualificationResponse> createQualification(
+			@RequestBody final QualificationRequest qualificationRequest,
 			@CurrentUser UserPrincipal userPrincipal) {
 
-		System.out.println("municipalityRequest..." + municipalityRequest);
+		System.out.println("qualificationRequest..." + qualificationRequest);
 		System.out.println("userPrincipal..." + userPrincipal);
 
-		MunicipalityResponse municipalityResponse = municipalityService.createMunicipality(municipalityRequest, userPrincipal);
-		return new ResponseEntity<>(municipalityResponse, HttpStatus.CREATED);
+		QualificationResponse qualificationResponse = qualificationService.createQualification(qualificationRequest, userPrincipal);
+		return new ResponseEntity<>(qualificationResponse, HttpStatus.CREATED);
 	}
 
-	@DeleteMapping("/{municipality_id}")
+	@DeleteMapping("/{qualification_id}")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-	public ResponseEntity<ApiResponse> deleteMunicipalityById(
-			@PathVariable("municipality_id") Long municipalityId,
+	public ResponseEntity<ApiResponse> deleteQualificationById(
+			@PathVariable("qualification_id") Long qualificationId,
 			@CurrentUser UserPrincipal userPrincipal) {
-		ApiResponse response = municipalityService.deleteMunicipalityById(municipalityId, userPrincipal);
+		ApiResponse response = qualificationService.deleteQualificationById(qualificationId, userPrincipal);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PutMapping("/{municipality_id}")
+	@PutMapping("/{qualification_id}")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-	public ResponseEntity<MunicipalityResponse> updateMunicipalityById(
-			@PathVariable("municipality_id") Long municipalityId,
-			@RequestBody MunicipalityRequest municipalityRequest,
+	public ResponseEntity<QualificationResponse> updateQualificationById(
+			@PathVariable("qualification_id") Long qualificationId,
+			@RequestBody QualificationRequest qualificationRequest,
 			@CurrentUser UserPrincipal userPrincipal) {
-		MunicipalityResponse municipalityResponse = municipalityService.updateMunicipalityById(municipalityId, municipalityRequest, userPrincipal);
-		return new ResponseEntity<>(municipalityResponse, HttpStatus.OK);
+		QualificationResponse qualificationResponse = qualificationService.updateQualificationById(qualificationId, qualificationRequest, userPrincipal);
+		return new ResponseEntity<>(qualificationResponse, HttpStatus.OK);
 	}
 
 }

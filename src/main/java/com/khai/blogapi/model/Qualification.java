@@ -11,42 +11,42 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "genders")
+@Table(name = "qualifications")
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Gender extends UserDateAudit {
+public class Qualification extends UserDateAudit {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genders_id_seq")
-	@SequenceGenerator(name = "genders_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "qualifications_id_seq")
+	@SequenceGenerator(name = "qualifications_id_seq", allocationSize = 1)
 	private Long id;
 
 	@Column(name = "name")
 	@NotEmpty
 	private String name;
 
-	@OneToMany(mappedBy = "gender", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "qualification", fetch = FetchType.EAGER)
 	private List<Employer> employers = new ArrayList<>();
 
 	@PreRemove
 	public void checkCountyAssociationBeforeRemoval() {
 		if (!this.employers.isEmpty()) {
-			throw new RuntimeException("Can't remove a gender that has employers !");
+			throw new RuntimeException("Can't remove a qualification that has employers !");
 		}
 	}
 
 	public void addEmployer(Employer employer) {
 		employers.add(employer);
-		((Employer) employers).setGender(this);
+		((Employer) employers).setQualification(this);
 	}
 
 	public void removeEmployer(Employer employer) {
 		employers.remove(employer);
-		((Employer) employers).setGender(null);
+		((Employer) employers).setQualification(null);
 	}
 
 	@JsonIgnore

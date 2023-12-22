@@ -1,6 +1,7 @@
 package com.khai.blogapi.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -17,73 +18,89 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Employer extends UserDateAudit {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  @Id
-  @GeneratedValue(
-    strategy = GenerationType.SEQUENCE,
-    generator = "employers_id_seq"
-  )
-  @SequenceGenerator(name = "employers_id_seq", allocationSize = 1)
-  private Long id;
+    @Id
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "employers_id_seq"
+    )
+    @SequenceGenerator(name = "employers_id_seq", allocationSize = 1)
+    private Long id;
 
-  @Column(name = "first_name")
-  @NotEmpty
-  private String firstName;
+    @Column(name = "id_old")
+    @NotEmpty
+    private String idOld;
 
-  @Column(name = "last_name")
-  @NotEmpty
-  private String lastName;
+    @Column(name = "first_name")
+    @NotEmpty
+    private String firstName;
+    
+    @Column(name = "last_name")
+    @NotEmpty
+    private String lastName;
 
-  @Column(name = "father_name")
-  @NotEmpty
-  private String fatherName;
+    @Column(name = "father_name")
+    @NotEmpty
+    private String fatherName;
 
-  @Column(name = "identification_number")
-  @NotEmpty
-  private String identificationNumber;
+    @Column(name = "identification_number")
+    @NotEmpty
+    private String identificationNumber;
 
-  @Column(name = "place_born")
-  @NotEmpty
-  private String placeBorn;
+    @Column(name = "place_born")
+    @NotEmpty
+    private String placeBorn;
 
-  @Column(name = "place_addr")
-  @NotEmpty
-  private String placeAddr;
+    @Column(name = "birthday")
+    @NotEmpty
+    private Date birthday;
 
-  @Column(name = "street")
-  @NotEmpty
-  private String street;
+    @Column(name = "date_of_termination")
+    @NotEmpty
+    private Date dateOfTermination;
 
-  @Column(name = "street_number")
-  @NotEmpty
-  private String streetNumber;
+    @Column(name = "place_addr")
+    @NotEmpty
+    private String placeAddr;
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(
-    name = "municipality_born_id",
-    referencedColumnName = "id",
-    foreignKey = @ForeignKey(name = "FK_MUNICIPALITY_EMPLOYER")
-  )
-  private Municipality municipalityBorn;
+    @Column(name = "street")
+    @NotEmpty
+    private String street;
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(
-    name = "municipality_addr_id",
-    referencedColumnName = "id",
-    foreignKey = @ForeignKey(name = "FK_MUNICIPALITY_EMPLOYER_ADDR")
-  )
-  private Municipality municipalityAddr;
-  
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(
-    name = "gender_id",
-    referencedColumnName = "id",
-    foreignKey = @ForeignKey(name = "FK_GENDER_EMPLOYER")
-  )
-  private Gender gender;
-  // public Employer(String name, County county) {
-  // 	this.name = name;
-  // 	this.county = county;
-  // }
+    @Column(name = "street_number")
+    @NotEmpty
+    private String streetNumber;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(
+            name = "municipality_born_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "FK_MUNICIPALITY_EMPLOYER_BORN")
+    )
+    private Municipality municipalityBorn;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(
+            name = "municipality_addr_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "FK_MUNICIPALITY_EMPLOYER_ADDR")
+    )
+    private Municipality municipalityAddr;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(
+            name = "gender_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "FK_GENDER_EMPLOYER")
+    )
+    private Gender gender;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(
+            name = "qualification_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "FK_QUALIFICATION_EMPLOYER")
+    )
+    private Qualification qualification;
 }

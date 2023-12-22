@@ -16,26 +16,24 @@ import org.springframework.stereotype.Service;
 
 import com.khai.blogapi.exception.ResourceExistException;
 import com.khai.blogapi.exception.ResourceNotFoundException;
-import com.khai.blogapi.model.Municipality;
-import com.khai.blogapi.model.County;
+import com.khai.blogapi.model.Qualification;
 import com.khai.blogapi.payload.ApiResponse;
-import com.khai.blogapi.payload.MunicipalityRequest;
-import com.khai.blogapi.payload.MunicipalityResponse;
+import com.khai.blogapi.payload.QualificationRequest;
+import com.khai.blogapi.payload.QualificationResponse;
 import com.khai.blogapi.payload.PageResponse;
 import com.khai.blogapi.payload.mapper;
-import com.khai.blogapi.repository.MunicipalityRepository;
+import com.khai.blogapi.repository.QualificationRepository;
 import com.khai.blogapi.repository.UserRepository;
 import com.khai.blogapi.security.UserPrincipal;
-import com.khai.blogapi.service.MunicipalityService;
-import com.khai.blogapi.service.CountyService;
+import com.khai.blogapi.service.QualificationService;
 import com.khai.blogapi.utils.AppConstant;
 import com.khai.blogapi.utils.AppUtils;
 
 @Service
-public class MunicipalityServiceImpl implements MunicipalityService {
+public class QualificationServiceImpl implements QualificationService {
 
 	@Autowired
-	MunicipalityRepository municipalityRepository;
+	QualificationRepository qualificationRepository;
 
 	@Autowired
 	UserRepository userRepository;
@@ -43,107 +41,100 @@ public class MunicipalityServiceImpl implements MunicipalityService {
 	@Autowired
 	ModelMapper modelMapper;
 
-	@Autowired
-	CountyService countyService;
-
 	@Override
-	public PageResponse<MunicipalityResponse> getAllMunicipalities(Integer page, Integer size) {
+	public PageResponse<QualificationResponse> getAllQualifications(Integer page, Integer size) {
 		AppUtils.validatePageAndSize(page, size);
 		Pageable pageable = PageRequest.of(page, size);
 
-		Page<Municipality> municipalities = municipalityRepository.findAll(pageable);
-		List<MunicipalityResponse> municipalityResponses = Arrays
-				.asList(modelMapper.map(municipalities.getContent(), MunicipalityResponse[].class));
+		Page<Qualification> qualifications = qualificationRepository.findAll(pageable);
+		List<QualificationResponse> qualificationResponses = Arrays
+				.asList(modelMapper.map(qualifications.getContent(), QualificationResponse[].class));
 
-		PageResponse<MunicipalityResponse> pageResponse = new PageResponse<>();
-		pageResponse.setContent(municipalityResponses);
+		PageResponse<QualificationResponse> pageResponse = new PageResponse<>();
+		pageResponse.setContent(qualificationResponses);
 		pageResponse.setPage(page);
 		pageResponse.setSize(size);
-		pageResponse.setTotalElements(municipalities.getNumberOfElements());
-		pageResponse.setTotalPages(municipalities.getTotalPages());
-		pageResponse.setLast(municipalities.isLast());
+		pageResponse.setTotalElements(qualifications.getNumberOfElements());
+		pageResponse.setTotalPages(qualifications.getTotalPages());
+		pageResponse.setLast(qualifications.isLast());
 
 		return pageResponse;
 	}
 
 	@Override
-	public List<MunicipalityResponse> getMunicipalities() {
-		List<Municipality> municipalities = StreamSupport
-				.stream(municipalityRepository.findAll().spliterator(), false)
+	public List<QualificationResponse> getQualifications() {
+		List<Qualification> qualifications = StreamSupport
+				.stream(qualificationRepository.findAll().spliterator(), false)
 				.collect(Collectors.toList());
-		return mapper.municipalitiesToMunicipalityResponse(municipalities);
+		return mapper.qualificationsToQualificationResponse(qualifications);
 	}
 
 	@Override
-	public MunicipalityResponse getMunicipalityById(Long municipalityId) {
-		Municipality municipality = municipalityRepository.findById(municipalityId)
-				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.MUNICIPALITY_NOT_FOUND + municipalityId));
-				System.out.println("nadir");
+	public QualificationResponse getQualificationById(Long qualificationId) {
+		Qualification qualification = qualificationRepository.findById(qualificationId)
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.QUALIFICATION_NOT_FOUND + qualificationId));				
 		// modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		// return modelMapper.map(municipality, MunicipalityResponse.class);
-		return mapper.municipalityToMunicipalityResponse(municipality);
+		// return modelMapper.map(qualification, QualificationResponse.class);
+		return mapper.qualificationToQualificationResponse(qualification);
 	}
 
 	@Override
-	public Municipality getMunicipality(Long municipalityId) {
-		return municipalityRepository.findById(municipalityId)
+	public Qualification getQualification(Long qualificationId) {
+		return qualificationRepository.findById(qualificationId)
 				.orElseThrow(
-						() -> new IllegalArgumentException("could not find municipalities with id: " + municipalityId));
+						() -> new IllegalArgumentException("could not find qualifications with id: " + qualificationId));
 	}
 
 	@Override
-	public MunicipalityResponse createMunicipality(MunicipalityRequest municipalityRequest,
+	public QualificationResponse createQualification(QualificationRequest qualificationRequest,
 			UserPrincipal userPrincipal) {
 
-		Municipality municipality = modelMapper.map(municipalityRequest, Municipality.class);
+		Qualification qualification = modelMapper.map(qualificationRequest, Qualification.class);
 
-		if (municipalityRepository.findByName(municipality.getName()).isPresent()) {
-			throw new ResourceExistException(AppConstant.MUNICIPALITY_EXIST);
+		if (qualificationRepository.findByName(qualification.getName()).isPresent()) {
+			throw new ResourceExistException(AppConstant.QUALIFICATION_EXIST);
 		}
 
-		County county = countyService.getCounty(municipalityRequest.getCountyId());
-		municipality.setCounty(county);
+		qualificationRepository.save(qualification);
 
-		municipalityRepository.save(municipality);
-
-		return modelMapper.map(municipality, MunicipalityResponse.class);
+		return modelMapper.map(qualification, QualificationResponse.class);
 
 	}
 
 	@Override
-	public ApiResponse deleteMunicipalityById(Long municipalityId, UserPrincipal userPrincipal) {
-		Municipality municipality = municipalityRepository.findById(municipalityId)
-				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.MUNICIPALITY_NOT_FOUND + municipalityId));
+	public ApiResponse deleteQualificationById(Long qualificationId, UserPrincipal userPrincipal) {
+		Qualification qualification = qualificationRepository.findById(qualificationId)
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.QUALIFICATION_NOT_FOUND + qualificationId));
 
-		municipalityRepository.delete(municipality);
-		return new ApiResponse(Boolean.TRUE, AppConstant.MUNICIPALITY_DELETE_MESSAGE, HttpStatus.OK);
+		qualificationRepository.delete(qualification);
+		return new ApiResponse(Boolean.TRUE, AppConstant.QUALIFICATION_DELETE_MESSAGE, HttpStatus.OK);
 	}
 
 	@Override
 	public ApiResponse deleteAll() {
-		municipalityRepository.deleteAll();
-		return new ApiResponse(Boolean.TRUE, AppConstant.MUNICIPALITY_DELETE_MESSAGE, HttpStatus.OK);
+		qualificationRepository.deleteAll();
+		return new ApiResponse(Boolean.TRUE, AppConstant.QUALIFICATION_DELETE_MESSAGE, HttpStatus.OK);
 	}
 
 	@Override
-	public MunicipalityResponse updateMunicipalityById(Long municipalityId, MunicipalityRequest municipalityRequest,
+	public QualificationResponse updateQualificationById(Long qualificationId, QualificationRequest qualificationRequest,
 			UserPrincipal userPrincipal) {
 
-		// if (municipalityRepository.existsByName(municipalityRequest.getName())) {
-		// throw new ResourceExistException(AppConstant.MUNICIPALITY_EXIST);
+		// if (qualificationRepository.existsByName(qualificationRequest.getName())) {
+		// throw new ResourceExistException(AppConstant.QUALIFICATION_EXIST);
 		// }
 
-		modelMapper.typeMap(MunicipalityRequest.class, Municipality.class)
-				.addMappings(mapper -> mapper.skip(Municipality::setId));
+		modelMapper.typeMap(QualificationRequest.class, Qualification.class)
+				.addMappings(mapper -> mapper.skip(Qualification::setId));
 
-		Municipality municipality = municipalityRepository.findById(municipalityId)
-				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.MUNICIPALITY_NOT_FOUND + municipalityId));
+		Qualification qualification = qualificationRepository.findById(qualificationId)
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.QUALIFICATION_NOT_FOUND + qualificationId));
 
-		modelMapper.map(municipalityRequest, municipality);
+		modelMapper.map(qualificationRequest, qualification);
 
-		municipalityRepository.save(municipality);
+		qualificationRepository.save(qualification);
 
-		return modelMapper.map(municipality, MunicipalityResponse.class);
+		return modelMapper.map(qualification, QualificationResponse.class);
 
 	}
 }

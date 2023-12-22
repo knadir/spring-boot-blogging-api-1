@@ -16,26 +16,26 @@ import org.springframework.stereotype.Service;
 
 import com.khai.blogapi.exception.ResourceExistException;
 import com.khai.blogapi.exception.ResourceNotFoundException;
-import com.khai.blogapi.model.Municipality;
+import com.khai.blogapi.model.Gender;
 import com.khai.blogapi.model.County;
 import com.khai.blogapi.payload.ApiResponse;
-import com.khai.blogapi.payload.MunicipalityRequest;
-import com.khai.blogapi.payload.MunicipalityResponse;
+import com.khai.blogapi.payload.GenderRequest;
+import com.khai.blogapi.payload.GenderResponse;
 import com.khai.blogapi.payload.PageResponse;
 import com.khai.blogapi.payload.mapper;
-import com.khai.blogapi.repository.MunicipalityRepository;
+import com.khai.blogapi.repository.GenderRepository;
 import com.khai.blogapi.repository.UserRepository;
 import com.khai.blogapi.security.UserPrincipal;
-import com.khai.blogapi.service.MunicipalityService;
+import com.khai.blogapi.service.GenderService;
 import com.khai.blogapi.service.CountyService;
 import com.khai.blogapi.utils.AppConstant;
 import com.khai.blogapi.utils.AppUtils;
 
 @Service
-public class MunicipalityServiceImpl implements MunicipalityService {
+public class GenderServiceImpl implements GenderService {
 
 	@Autowired
-	MunicipalityRepository municipalityRepository;
+	GenderRepository genderRepository;
 
 	@Autowired
 	UserRepository userRepository;
@@ -47,103 +47,99 @@ public class MunicipalityServiceImpl implements MunicipalityService {
 	CountyService countyService;
 
 	@Override
-	public PageResponse<MunicipalityResponse> getAllMunicipalities(Integer page, Integer size) {
+	public PageResponse<GenderResponse> getAllGenders(Integer page, Integer size) {
 		AppUtils.validatePageAndSize(page, size);
 		Pageable pageable = PageRequest.of(page, size);
 
-		Page<Municipality> municipalities = municipalityRepository.findAll(pageable);
-		List<MunicipalityResponse> municipalityResponses = Arrays
-				.asList(modelMapper.map(municipalities.getContent(), MunicipalityResponse[].class));
+		Page<Gender> genders = genderRepository.findAll(pageable);
+		List<GenderResponse> genderResponses = Arrays
+				.asList(modelMapper.map(genders.getContent(), GenderResponse[].class));
 
-		PageResponse<MunicipalityResponse> pageResponse = new PageResponse<>();
-		pageResponse.setContent(municipalityResponses);
+		PageResponse<GenderResponse> pageResponse = new PageResponse<>();
+		pageResponse.setContent(genderResponses);
 		pageResponse.setPage(page);
 		pageResponse.setSize(size);
-		pageResponse.setTotalElements(municipalities.getNumberOfElements());
-		pageResponse.setTotalPages(municipalities.getTotalPages());
-		pageResponse.setLast(municipalities.isLast());
+		pageResponse.setTotalElements(genders.getNumberOfElements());
+		pageResponse.setTotalPages(genders.getTotalPages());
+		pageResponse.setLast(genders.isLast());
 
 		return pageResponse;
 	}
 
 	@Override
-	public List<MunicipalityResponse> getMunicipalities() {
-		List<Municipality> municipalities = StreamSupport
-				.stream(municipalityRepository.findAll().spliterator(), false)
+	public List<GenderResponse> getGenders() {
+		List<Gender> genders = StreamSupport
+				.stream(genderRepository.findAll().spliterator(), false)
 				.collect(Collectors.toList());
-		return mapper.municipalitiesToMunicipalityResponse(municipalities);
+		return mapper.gendersToGenderResponse(genders);
 	}
 
 	@Override
-	public MunicipalityResponse getMunicipalityById(Long municipalityId) {
-		Municipality municipality = municipalityRepository.findById(municipalityId)
-				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.MUNICIPALITY_NOT_FOUND + municipalityId));
-				System.out.println("nadir");
+	public GenderResponse getGenderById(Long genderId) {
+		Gender gender = genderRepository.findById(genderId)
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.GENDER_NOT_FOUND + genderId));				
 		// modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		// return modelMapper.map(municipality, MunicipalityResponse.class);
-		return mapper.municipalityToMunicipalityResponse(municipality);
+		// return modelMapper.map(gender, GenderResponse.class);
+		return mapper.genderToGenderResponse(gender);
 	}
 
 	@Override
-	public Municipality getMunicipality(Long municipalityId) {
-		return municipalityRepository.findById(municipalityId)
+	public Gender getGender(Long genderId) {
+		return genderRepository.findById(genderId)
 				.orElseThrow(
-						() -> new IllegalArgumentException("could not find municipalities with id: " + municipalityId));
+						() -> new IllegalArgumentException("could not find genders with id: " + genderId));
 	}
 
 	@Override
-	public MunicipalityResponse createMunicipality(MunicipalityRequest municipalityRequest,
+	public GenderResponse createGender(GenderRequest genderRequest,
 			UserPrincipal userPrincipal) {
 
-		Municipality municipality = modelMapper.map(municipalityRequest, Municipality.class);
+		Gender gender = modelMapper.map(genderRequest, Gender.class);
 
-		if (municipalityRepository.findByName(municipality.getName()).isPresent()) {
-			throw new ResourceExistException(AppConstant.MUNICIPALITY_EXIST);
+		if (genderRepository.findByName(gender.getName()).isPresent()) {
+			throw new ResourceExistException(AppConstant.GENDER_EXIST);
 		}
 
-		County county = countyService.getCounty(municipalityRequest.getCountyId());
-		municipality.setCounty(county);
+		genderRepository.save(gender);
 
-		municipalityRepository.save(municipality);
-
-		return modelMapper.map(municipality, MunicipalityResponse.class);
+		return modelMapper.map(gender, GenderResponse.class);
 
 	}
 
 	@Override
-	public ApiResponse deleteMunicipalityById(Long municipalityId, UserPrincipal userPrincipal) {
-		Municipality municipality = municipalityRepository.findById(municipalityId)
-				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.MUNICIPALITY_NOT_FOUND + municipalityId));
+	public ApiResponse deleteGenderById(Long genderId, UserPrincipal userPrincipal) {
+		Gender gender = genderRepository.findById(genderId)
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.GENDER_NOT_FOUND + genderId));
 
-		municipalityRepository.delete(municipality);
-		return new ApiResponse(Boolean.TRUE, AppConstant.MUNICIPALITY_DELETE_MESSAGE, HttpStatus.OK);
+		genderRepository.delete(gender);
+		return new ApiResponse(Boolean.TRUE, AppConstant.GENDER_DELETE_MESSAGE, HttpStatus.OK);
 	}
 
 	@Override
 	public ApiResponse deleteAll() {
-		municipalityRepository.deleteAll();
-		return new ApiResponse(Boolean.TRUE, AppConstant.MUNICIPALITY_DELETE_MESSAGE, HttpStatus.OK);
+		genderRepository.deleteAll();
+		return new ApiResponse(Boolean.TRUE, AppConstant.GENDER_DELETE_MESSAGE, HttpStatus.OK);
 	}
 
 	@Override
-	public MunicipalityResponse updateMunicipalityById(Long municipalityId, MunicipalityRequest municipalityRequest,
+	public GenderResponse updateGenderById(Long genderId, GenderRequest genderRequest,
 			UserPrincipal userPrincipal) {
 
-		// if (municipalityRepository.existsByName(municipalityRequest.getName())) {
-		// throw new ResourceExistException(AppConstant.MUNICIPALITY_EXIST);
+		// if (genderRepository.existsByName(genderRequest.getName())) {
+		// throw new ResourceExistException(AppConstant.GENDER_EXIST);
 		// }
 
-		modelMapper.typeMap(MunicipalityRequest.class, Municipality.class)
-				.addMappings(mapper -> mapper.skip(Municipality::setId));
+		modelMapper.typeMap(GenderRequest.class, Gender.class)
+				.addMappings(mapper -> mapper.skip(Gender::setId));
 
-		Municipality municipality = municipalityRepository.findById(municipalityId)
-				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.MUNICIPALITY_NOT_FOUND + municipalityId));
+		Gender gender = genderRepository.findById(genderId)
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.GENDER_NOT_FOUND + genderId));
 
-		modelMapper.map(municipalityRequest, municipality);
+		modelMapper.map(genderRequest, gender);
 
-		municipalityRepository.save(municipality);
+		genderRepository.save(gender);
 
-		return modelMapper.map(municipality, MunicipalityResponse.class);
+		return modelMapper.map(gender, GenderResponse.class);
 
 	}
 }

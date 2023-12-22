@@ -2,30 +2,28 @@ package com.khai.blogapi.service;
 
 import java.util.List;
 
-import com.khai.blogapi.model.Gender;
+import com.khai.blogapi.model.Qualification;
 import com.khai.blogapi.payload.ApiResponse;
-import com.khai.blogapi.payload.GenderRequest;
-import com.khai.blogapi.payload.GenderResponse;
+import com.khai.blogapi.payload.QualificationRequest;
+import com.khai.blogapi.payload.QualificationResponse;
 import com.khai.blogapi.payload.PageResponse;
 import com.khai.blogapi.security.UserPrincipal;
 
-public interface GenderService {
+public interface QualificationService {
 
-	PageResponse<GenderResponse> getAllGenders(Integer page, Integer size);
+	PageResponse<QualificationResponse> getAllQualifications(Integer page, Integer size);
 
-	List<GenderResponse> getGenders();
+	List<QualificationResponse> getQualifications();
 
-	GenderResponse getGenderById(Long GenderId);
+	QualificationResponse getQualificationById(Long QualificationId);
 
-	Gender getGender(Long GenderId);
+	Qualification getQualification(Long QualificationId);
 
-	GenderResponse createGender(GenderRequest GenderRequest, UserPrincipal userPrincipal);
+	QualificationResponse createQualification(QualificationRequest QualificationRequest, UserPrincipal userPrincipal);
 
-	ApiResponse deleteGenderById(Long GenderId, UserPrincipal userPrincipal);
+	ApiResponse deleteQualificationById(Long QualificationId, UserPrincipal userPrincipal);
 
 	ApiResponse deleteAll();
 
-	GenderResponse updateGenderById(Long GenderId, GenderRequest GenderRequest, UserPrincipal userPrincipal);
-	
-
+	QualificationResponse updateQualificationById(Long QualificationId, QualificationRequest QualificationRequest, UserPrincipal userPrincipal);
 }

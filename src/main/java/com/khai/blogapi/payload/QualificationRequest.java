@@ -3,7 +3,7 @@ package com.khai.blogapi.payload;
 import lombok.Data;
 
 @Data
-public class GenderRequest {
+public class QualificationRequest {
 
 	private String name;
 

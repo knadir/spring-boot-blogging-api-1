@@ -18,77 +18,77 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.khai.blogapi.payload.ApiResponse;
-import com.khai.blogapi.payload.MunicipalityRequest;
-import com.khai.blogapi.payload.MunicipalityResponse;
+import com.khai.blogapi.payload.GenderRequest;
+import com.khai.blogapi.payload.GenderResponse;
 import com.khai.blogapi.payload.PageResponse;
 import com.khai.blogapi.security.CurrentUser;
 import com.khai.blogapi.security.UserPrincipal;
 import com.khai.blogapi.service.BlogService;
-import com.khai.blogapi.service.MunicipalityService;
+import com.khai.blogapi.service.GenderService;
 import com.khai.blogapi.utils.AppConstant;
 
 @RestController
 @CrossOrigin(exposedHeaders = "errors, content-type")
-@RequestMapping("api/municipalities")
-public class MunicipalityController {
+@RequestMapping("api/genders")
+public class GenderController {
 
 	@Autowired
-	MunicipalityService municipalityService;
+	GenderService genderService;
 
 	@Autowired
 	BlogService blogService;
 
 	@GetMapping
-	public ResponseEntity<PageResponse<MunicipalityResponse>> getAllMunicipalities(
+	public ResponseEntity<PageResponse<GenderResponse>> getAllGenders(
 			@RequestParam(value = "page", defaultValue = AppConstant.DEFAULT_PAGE_NUMBER) Integer page,
 			@RequestParam(value = "size", defaultValue = AppConstant.DEFAULT_PAGE_SIZE) Integer size) {
-		PageResponse<MunicipalityResponse> municipalityResponse = municipalityService.getAllMunicipalities(page, size);
-		return new ResponseEntity<>(municipalityResponse, HttpStatus.OK);
+		PageResponse<GenderResponse> genderResponse = genderService.getAllGenders(page, size);
+		return new ResponseEntity<>(genderResponse, HttpStatus.OK);
 	}
 
 	@GetMapping("/getAll")
-	public ResponseEntity<List<MunicipalityResponse>> getMunicipalities() {
-		List<MunicipalityResponse> municipalityResponse = municipalityService.getMunicipalities();
-		return new ResponseEntity<>(municipalityResponse, HttpStatus.OK);
+	public ResponseEntity<List<GenderResponse>> getGenders() {
+		List<GenderResponse> genderResponse = genderService.getGenders();
+		return new ResponseEntity<>(genderResponse, HttpStatus.OK);
 	}
 
-	@GetMapping("/{municipality_id}")
-	public ResponseEntity<MunicipalityResponse> getMunicipalityById(
-			@PathVariable("municipality_id") Long municipalityId) {
-		MunicipalityResponse municipalityResponse = municipalityService.getMunicipalityById(municipalityId);
-		return new ResponseEntity<>(municipalityResponse, HttpStatus.OK);
+	@GetMapping("/{gender_id}")
+	public ResponseEntity<GenderResponse> getGenderById(
+			@PathVariable("gender_id") Long genderId) {
+		GenderResponse genderResponse = genderService.getGenderById(genderId);
+		return new ResponseEntity<>(genderResponse, HttpStatus.OK);
 	}
 
 	@PostMapping
 	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-	public ResponseEntity<MunicipalityResponse> createMunicipality(
-			@RequestBody final MunicipalityRequest municipalityRequest,
+	public ResponseEntity<GenderResponse> createGender(
+			@RequestBody final GenderRequest genderRequest,
 			@CurrentUser UserPrincipal userPrincipal) {
 
-		System.out.println("municipalityRequest..." + municipalityRequest);
+		System.out.println("genderRequest..." + genderRequest);
 		System.out.println("userPrincipal..." + userPrincipal);
 
-		MunicipalityResponse municipalityResponse = municipalityService.createMunicipality(municipalityRequest, userPrincipal);
-		return new ResponseEntity<>(municipalityResponse, HttpStatus.CREATED);
+		GenderResponse genderResponse = genderService.createGender(genderRequest, userPrincipal);
+		return new ResponseEntity<>(genderResponse, HttpStatus.CREATED);
 	}
 
-	@DeleteMapping("/{municipality_id}")
+	@DeleteMapping("/{gender_id}")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-	public ResponseEntity<ApiResponse> deleteMunicipalityById(
-			@PathVariable("municipality_id") Long municipalityId,
+	public ResponseEntity<ApiResponse> deleteGenderById(
+			@PathVariable("gender_id") Long genderId,
 			@CurrentUser UserPrincipal userPrincipal) {
-		ApiResponse response = municipalityService.deleteMunicipalityById(municipalityId, userPrincipal);
+		ApiResponse response = genderService.deleteGenderById(genderId, userPrincipal);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PutMapping("/{municipality_id}")
+	@PutMapping("/{gender_id}")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-	public ResponseEntity<MunicipalityResponse> updateMunicipalityById(
-			@PathVariable("municipality_id") Long municipalityId,
-			@RequestBody MunicipalityRequest municipalityRequest,
+	public ResponseEntity<GenderResponse> updateGenderById(
+			@PathVariable("gender_id") Long genderId,
+			@RequestBody GenderRequest genderRequest,
 			@CurrentUser UserPrincipal userPrincipal) {
-		MunicipalityResponse municipalityResponse = municipalityService.updateMunicipalityById(municipalityId, municipalityRequest, userPrincipal);
-		return new ResponseEntity<>(municipalityResponse, HttpStatus.OK);
+		GenderResponse genderResponse = genderService.updateGenderById(genderId, genderRequest, userPrincipal);
+		return new ResponseEntity<>(genderResponse, HttpStatus.OK);
 	}
 
 }

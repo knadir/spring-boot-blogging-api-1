@@ -26,6 +26,4 @@ public interface GenderService {
 	ApiResponse deleteAll();
 
 	GenderResponse updateGenderById(Long GenderId, GenderRequest GenderRequest, UserPrincipal userPrincipal);
-	
-
 }

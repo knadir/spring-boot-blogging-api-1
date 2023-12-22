@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class GenderResponse extends UserDateAudit{
+public class QualificationResponse extends UserDateAudit{
 
 	private static final long serialVersionUID = 1L;
 
