@@ -165,7 +165,7 @@ public class BlogServiceImpl implements BlogService {
 
 		blog.setTags(tags);
 		blog.setUser(user);
-		System.out.println(blog.getId());
+		//System.out.println(blog.getId());
 		blogRepository.save(blog);
 
 		return modelMapper.map(blog, BlogResponse.class);

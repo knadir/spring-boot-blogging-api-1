@@ -124,7 +124,7 @@ public class mapper {
         employerResponse.setIdentificationNumber(
                 employer.getIdentificationNumber()
         );
-        System.out.println("employer.getMunicipalityBorn()..."+employer.getMunicipalityBorn());
+        //System.out.println("employer.getMunicipalityBorn()..."+employer.getMunicipalityBorn());
         if (employer != null && employer.getMunicipalityBorn() != null) {        
             employerResponse.setMunicipalityBornId(
                     employer.getMunicipalityBorn().getId()

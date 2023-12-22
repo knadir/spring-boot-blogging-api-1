@@ -79,8 +79,8 @@ public class EntityController {
 			@RequestBody EntityRequest entityRequest,
 			@CurrentUser UserPrincipal userPrincipal) {
 
-		System.out.println("entityRequest..." + entityRequest);
-		System.out.println("userPrincipal..." + userPrincipal);
+		//System.out.println("entityRequest..." + entityRequest);
+		//System.out.println("userPrincipal..." + userPrincipal);
 
 		EntityResponse entityResponse = entityService.createEntity(entityRequest, userPrincipal);
 		return new ResponseEntity<>(entityResponse, HttpStatus.CREATED);

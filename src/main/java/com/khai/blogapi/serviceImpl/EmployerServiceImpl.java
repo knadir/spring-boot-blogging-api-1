@@ -98,14 +98,14 @@ public class EmployerServiceImpl implements EmployerService {
 
     @Override
     public EmployerResponse createEmployer(EmployerRequest employerRequest, UserPrincipal userPrincipal) {
-        System.out.println("employerRequest..." + employerRequest);
-        System.out.println("userPrincipal..." + userPrincipal);
+        //System.out.println("employerRequest..." + employerRequest);
+        //System.out.println("userPrincipal..." + userPrincipal);
 
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
         Employer employer = modelMapper.map(employerRequest, Employer.class);
 
-        System.out.println("employer..." + employer);
+        //System.out.println("employer..." + employer);
 
         // if (employerRepository.findByName(employer.getName()).isPresent()) {
         // throw new ResourceExistException(AppConstant.EMPLOYER_EXIST);

@@ -83,10 +83,10 @@ public class EmployerController {
 			@PathVariable("employer_id") Long employerId,
 			@RequestBody EmployerRequest employerRequest,
 			@CurrentUser UserPrincipal userPrincipal) {
-            System.out.println("employerRequest Controller...."+employerRequest);
+            //System.out.println("employerRequest Controller...."+employerRequest);
 		EmployerResponse employerResponse = employerService.updateEmployerById(employerId, employerRequest,
 				userPrincipal);
-	     System.out.println("employerResponse Controller...."+employerResponse);
+	     //System.out.println("employerResponse Controller...."+employerResponse);
 		return new ResponseEntity<>(employerResponse, HttpStatus.OK);
 	}
 

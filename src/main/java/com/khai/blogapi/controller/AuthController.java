@@ -58,9 +58,9 @@ public class AuthController {
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 
-		System.out.println("userDetails..." + userDetails);
-		System.out.println("auth..." + auth);
-		System.out.println("token..." + token);
+		//System.out.println("userDetails..." + userDetails);
+		//System.out.println("auth..." + auth);
+		//System.out.println("token..." + token);
 
 		return new ResponseEntity<>(new JwtResponse(token, "Bearer", userDetails.getId(),
 				userDetails.getUsername(),

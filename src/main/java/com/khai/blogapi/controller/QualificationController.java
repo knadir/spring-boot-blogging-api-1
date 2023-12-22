@@ -65,8 +65,8 @@ public class QualificationController {
 			@RequestBody final QualificationRequest qualificationRequest,
 			@CurrentUser UserPrincipal userPrincipal) {
 
-		System.out.println("qualificationRequest..." + qualificationRequest);
-		System.out.println("userPrincipal..." + userPrincipal);
+		//System.out.println("qualificationRequest..." + qualificationRequest);
+		//System.out.println("userPrincipal..." + userPrincipal);
 
 		QualificationResponse qualificationResponse = qualificationService.createQualification(qualificationRequest, userPrincipal);
 		return new ResponseEntity<>(qualificationResponse, HttpStatus.CREATED);

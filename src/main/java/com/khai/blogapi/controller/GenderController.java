@@ -65,8 +65,8 @@ public class GenderController {
 			@RequestBody final GenderRequest genderRequest,
 			@CurrentUser UserPrincipal userPrincipal) {
 
-		System.out.println("genderRequest..." + genderRequest);
-		System.out.println("userPrincipal..." + userPrincipal);
+		//System.out.println("genderRequest..." + genderRequest);
+		//System.out.println("userPrincipal..." + userPrincipal);
 
 		GenderResponse genderResponse = genderService.createGender(genderRequest, userPrincipal);
 		return new ResponseEntity<>(genderResponse, HttpStatus.CREATED);

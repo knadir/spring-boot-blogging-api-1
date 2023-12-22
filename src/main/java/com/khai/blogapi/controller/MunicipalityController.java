@@ -65,8 +65,8 @@ public class MunicipalityController {
 			@RequestBody final MunicipalityRequest municipalityRequest,
 			@CurrentUser UserPrincipal userPrincipal) {
 
-		System.out.println("municipalityRequest..." + municipalityRequest);
-		System.out.println("userPrincipal..." + userPrincipal);
+		//System.out.println("municipalityRequest..." + municipalityRequest);
+		//System.out.println("userPrincipal..." + userPrincipal);
 
 		MunicipalityResponse municipalityResponse = municipalityService.createMunicipality(municipalityRequest, userPrincipal);
 		return new ResponseEntity<>(municipalityResponse, HttpStatus.CREATED);

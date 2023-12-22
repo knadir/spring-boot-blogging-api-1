@@ -72,8 +72,8 @@ public class CountyController {
 			@RequestBody final CountyRequest countyRequest,
 			@CurrentUser UserPrincipal userPrincipal) {
 
-		System.out.println("countyRequest..." + countyRequest);
-		System.out.println("userPrincipal..." + userPrincipal);
+		//System.out.println("countyRequest..." + countyRequest);
+		//System.out.println("userPrincipal..." + userPrincipal);
 
 		CountyResponse countyResponse = countyService.createCounty(countyRequest, userPrincipal);
 		return new ResponseEntity<>(countyResponse, HttpStatus.CREATED);
