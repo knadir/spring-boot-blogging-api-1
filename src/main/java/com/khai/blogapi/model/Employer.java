@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -53,11 +54,10 @@ public class Employer extends UserDateAudit {
     private String placeBorn;
 
     @Column(name = "birthday")
-    @NotEmpty
+    @NotNull
     private Date birthday;
 
     @Column(name = "date_of_termination")
-    @NotEmpty
     private Date dateOfTermination;
 
     @Column(name = "place_addr")
@@ -103,4 +103,12 @@ public class Employer extends UserDateAudit {
             foreignKey = @ForeignKey(name = "FK_QUALIFICATION_EMPLOYER")
     )
     private Qualification qualification;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(
+            name = "bank_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "FK_BANK_EMPLOYER")
+    )
+    private Bank bank;
 }
