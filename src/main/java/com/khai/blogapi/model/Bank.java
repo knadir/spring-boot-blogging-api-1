@@ -18,47 +18,50 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Bank extends UserDateAudit {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "banks_id_seq")
-	@SequenceGenerator(name = "banks_id_seq", allocationSize = 1)
-	private Long id;
+  @Id
+  @GeneratedValue(
+    strategy = GenerationType.SEQUENCE,
+    generator = "banks_id_seq"
+  )
+  @SequenceGenerator(name = "banks_id_seq", allocationSize = 1)
+  private Long id;
 
-	@Column(name = "name")
-	@NotEmpty
-	private String name;
+  @Column(name = "name")
+  @NotEmpty
+  private String name;
 
-	@OneToMany(mappedBy = "bank", fetch = FetchType.EAGER)
-	private List<Employer> employers = new ArrayList<>();
+  @OneToMany(mappedBy = "bank", fetch = FetchType.EAGER)
+  private List<Employer> employers = new ArrayList<>();
 
-	@PreRemove
-	public void checkCountyAssociationBeforeRemoval() {
-		if (!this.employers.isEmpty()) {
-			throw new RuntimeException("Can't remove a bank that has employers !");
-		}
-	}
+  @PreRemove
+  public void checkBankAssociationBeforeRemoval() {
+    if (!this.employers.isEmpty()) {
+      throw new RuntimeException("Can't remove a bank that has employers !");
+    }
+  }
 
-	public void addEmployer(Employer employer) {
-		employers.add(employer);
-		((Employer) employers).setBank(this);
-	}
+  public void addEmployer(Employer employer) {
+    employers.add(employer);
+    ((Employer) employers).setBank(this);
+  }
 
-	public void removeEmployer(Employer employer) {
-		employers.remove(employer);
-		((Employer) employers).setBank(null);
-	}
+  public void removeEmployer(Employer employer) {
+    employers.remove(employer);
+    ((Employer) employers).setBank(null);
+  }
 
-	@JsonIgnore
-	public List<Employer> getEmployers() {
-		return employers == null ? null : new ArrayList<>(this.employers);
-	}
+  @JsonIgnore
+  public List<Employer> getEmployers() {
+    return employers == null ? null : new ArrayList<>(this.employers);
+  }
 
-	public void setEmployers(List<Employer> employers) {
-		if (employers == null) {
-			this.employers = null;
-		} else {
-			this.employers = employers;
-		}
-	}
+  public void setEmployers(List<Employer> employers) {
+    if (employers == null) {
+      this.employers = null;
+    } else {
+      this.employers = employers;
+    }
+  }
 }

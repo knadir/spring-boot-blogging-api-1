@@ -19,96 +19,104 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Employer extends UserDateAudit {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "employers_id_seq"
-    )
-    @SequenceGenerator(name = "employers_id_seq", allocationSize = 1)
-    private Long id;
+  @Id
+  @GeneratedValue(
+    strategy = GenerationType.SEQUENCE,
+    generator = "employers_id_seq"
+  )
+  @SequenceGenerator(name = "employers_id_seq", allocationSize = 1)
+  private Long id;
 
-    @Column(name = "id_old")
-    @NotEmpty
-    private String idOld;
+  @Column(name = "id_old")
+  @NotEmpty
+  private String idOld;
 
-    @Column(name = "first_name")
-    @NotEmpty
-    private String firstName;
-    
-    @Column(name = "last_name")
-    @NotEmpty
-    private String lastName;
+  @Column(name = "first_name")
+  @NotEmpty
+  private String firstName;
 
-    @Column(name = "father_name")
-    @NotEmpty
-    private String fatherName;
+  @Column(name = "last_name")
+  @NotEmpty
+  private String lastName;
 
-    @Column(name = "identification_number")
-    @NotEmpty
-    private String identificationNumber;
+  @Column(name = "father_name")
+  @NotEmpty
+  private String fatherName;
 
-    @Column(name = "place_born")
-    @NotEmpty
-    private String placeBorn;
+  @Column(name = "identification_number")
+  @NotEmpty
+  private String identificationNumber;
 
-    @Column(name = "birthday")
-    @NotNull
-    private Date birthday;
+  @Column(name = "id_number")
+  @NotEmpty
+  private String identNumber;
 
-    @Column(name = "date_of_termination")
-    private Date dateOfTermination;
+  @Column(name = "place_born")
+  @NotEmpty
+  private String placeBorn;
 
-    @Column(name = "place_addr")
-    @NotEmpty
-    private String placeAddr;
+  @Column(name = "birthday")
+  @NotNull
+  private Date birthday;
 
-    @Column(name = "street")
-    @NotEmpty
-    private String street;
+  @Column(name = "date_of_termination")
+  private Date dateOfTermination;
 
-    @Column(name = "street_number")
-    @NotEmpty
-    private String streetNumber;
+  @Column(name = "place_addr")
+  @NotEmpty
+  private String placeAddr;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(
-            name = "municipality_born_id",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "FK_MUNICIPALITY_EMPLOYER_BORN")
-    )
-    private Municipality municipalityBorn;
+  @Column(name = "street")
+  @NotEmpty
+  private String street;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(
-            name = "municipality_addr_id",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "FK_MUNICIPALITY_EMPLOYER_ADDR")
-    )
-    private Municipality municipalityAddr;
+  @Column(name = "street_number")
+  @NotEmpty
+  private String streetNumber;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(
-            name = "gender_id",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "FK_GENDER_EMPLOYER")
-    )
-    private Gender gender;
+  @Column(name = "bank_account")
+  @NotEmpty
+  private String bankAccount;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(
-            name = "qualification_id",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "FK_QUALIFICATION_EMPLOYER")
-    )
-    private Qualification qualification;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(
+    name = "municipality_born_id",
+    referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_MUNICIPALITY_EMPLOYER_BORN")
+  )
+  private Municipality municipalityBorn;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(
-            name = "bank_id",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "FK_BANK_EMPLOYER")
-    )
-    private Bank bank;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(
+    name = "municipality_addr_id",
+    referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_MUNICIPALITY_EMPLOYER_ADDR")
+  )
+  private Municipality municipalityAddr;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(
+    name = "gender_id",
+    referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_GENDER_EMPLOYER")
+  )
+  private Gender gender;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(
+    name = "qualification_id",
+    referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_QUALIFICATION_EMPLOYER")
+  )
+  private Qualification qualification;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(
+    name = "bank_id",
+    referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_BANK_EMPLOYER")
+  )
+  private Bank bank;
 }

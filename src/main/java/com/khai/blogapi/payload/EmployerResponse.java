@@ -1,9 +1,9 @@
 package com.khai.blogapi.payload;
 
 import com.khai.blogapi.model.UserDateAudit;
+import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -16,6 +16,7 @@ public class EmployerResponse extends UserDateAudit {
   private String lastName;
   private String fatherName;
   private String identificationNumber;
+  private String identNumber;
   private Long municipalityBornId;
   private String municipalityBornName;
   private String placeBorn;
@@ -27,6 +28,9 @@ public class EmployerResponse extends UserDateAudit {
   private String genderName;
   private Long qualificationId;
   private String qualificationName;
+  private Long bankId;
+  private String bankAccount;
+  private String bankName;
   private String placeAddr;
   private String street;
   private String streetNumber;
