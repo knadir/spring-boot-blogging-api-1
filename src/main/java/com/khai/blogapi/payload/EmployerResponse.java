@@ -28,6 +28,8 @@ public class EmployerResponse extends UserDateAudit {
   private String genderName;
   private Long qualificationId;
   private String qualificationName;
+  private Long departmentId;
+  private String departmentName;
   private Long bankId;
   private String bankAccount;
   private String bankName;

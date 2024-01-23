@@ -119,4 +119,12 @@ public class Employer extends UserDateAudit {
     foreignKey = @ForeignKey(name = "FK_BANK_EMPLOYER")
   )
   private Bank bank;
+  
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(
+    name = "department_id",
+    referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_DEPARTMENT_EMPLOYER")
+  )
+  private Department department;
 }
