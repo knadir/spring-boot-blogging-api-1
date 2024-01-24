@@ -20,6 +20,7 @@ public class EmployerRequest {
   private Long municipalityAddrId;
   private Long genderId;
   private Long qualificationId;
+  private Long departmentId;
   private Long bankId;
   private String bankAccount;
   private String street;
