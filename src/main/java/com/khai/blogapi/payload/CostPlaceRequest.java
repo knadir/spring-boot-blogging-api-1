@@ -4,7 +4,7 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class DepartmentRequest {
+public class CostPlaceRequest {
 
   private String name;
   private Long activityId;

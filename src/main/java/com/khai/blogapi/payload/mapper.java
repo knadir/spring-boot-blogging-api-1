@@ -1,5 +1,6 @@
 package com.khai.blogapi.payload;
 
+import com.khai.blogapi.model.Activity;
 import com.khai.blogapi.model.Bank;
 import com.khai.blogapi.model.County;
 import com.khai.blogapi.model.Employer;
@@ -8,6 +9,7 @@ import com.khai.blogapi.model.Gender;
 import com.khai.blogapi.model.Municipality;
 import com.khai.blogapi.model.Qualification;
 import com.khai.blogapi.model.Department;
+import com.khai.blogapi.model.CostPlace;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,6 +99,29 @@ public class mapper {
 		DepartmentResponse departmentResponse = new DepartmentResponse();
 		departmentResponse.setId(department.getId());
 		departmentResponse.setName(department.getName());
+		if (department != null && department.getActivity() != null) {
+			departmentResponse.setActivityId(department.getActivity().getId());
+		}
+		if (department != null && department.getActivity() != null) {
+			departmentResponse.setActivityName(department.getActivity().getName());
+		}
+		if (department != null && department.getActivity() != null) {
+			departmentResponse.setActivityIdOld(department.getActivity().getIdOld());
+		}
+		
+//		// Get the activity name from department
+//		String activityIdOld = department.getActivity().getIdOld();
+//
+//		// Set the activity name in departmentResponse
+//		departmentResponse.setActivityIdOld(activityIdOld);
+//
+//		// Now, you can use activityName or departmentResponse.getActivityName() as needed
+//		String str1 = "departmentResponse.setActivityIdOld(department.getActivity().getIdOld())...";
+//        String str2 = activityIdOld; // or String str2 = departmentResponse.getActivityIdOld();
+//		
+//        String result = str1 + str2;
+//        
+//		System.out.println(result);
 		return departmentResponse;
 	}
 
@@ -106,6 +131,37 @@ public class mapper {
 			departmentResponse.add(departmentToDepartmentResponse(department));
 		}
 		return departmentResponse;
+	}
+
+	public static CostPlaceResponse costPlaceToCostPlaceResponse(CostPlace costPlace) {
+		CostPlaceResponse costPlaceResponse = new CostPlaceResponse();
+		costPlaceResponse.setId(costPlace.getId());
+		costPlaceResponse.setName(costPlace.getName());
+		return costPlaceResponse;
+	}
+
+	public static List<CostPlaceResponse> costPlacesToCostPlaceResponse(List<CostPlace> costPlaces) {
+		List<CostPlaceResponse> costPlaceResponse = new ArrayList<>();
+		for (CostPlace costPlace : costPlaces) {
+			costPlaceResponse.add(costPlaceToCostPlaceResponse(costPlace));
+		}
+		return costPlaceResponse;
+	}
+
+	public static ActivityResponse activityToActivityResponse(Activity activity) {
+		ActivityResponse activityResponse = new ActivityResponse();
+		activityResponse.setId(activity.getId());
+		activityResponse.setName(activity.getName());
+		activityResponse.setIdOld(activity.getIdOld());
+		return activityResponse;
+	}
+
+	public static List<ActivityResponse> activitiesToActivityResponse(List<Activity> activities) {
+		List<ActivityResponse> activityResponse = new ArrayList<>();
+		for (Activity activity : activities) {
+			activityResponse.add(activityToActivityResponse(activity));
+		}
+		return activityResponse;
 	}
 
 	public static BankResponse bankToBankResponse(Bank bank) {

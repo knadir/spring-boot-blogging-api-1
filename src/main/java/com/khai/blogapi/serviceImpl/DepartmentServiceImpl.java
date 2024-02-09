@@ -72,7 +72,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	@Override
 	public DepartmentResponse getDepartmentById(Long departmentId) {
 		Department department = departmentRepository.findById(departmentId)
-				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.QUALIFICATION_NOT_FOUND + departmentId));				
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.DEPARTMENT_NOT_FOUND + departmentId));				
 		// modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		// return modelMapper.map(department, DepartmentResponse.class);
 		return mapper.departmentToDepartmentResponse(department);
@@ -92,7 +92,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 		Department department = modelMapper.map(departmentRequest, Department.class);
 
 		if (departmentRepository.findByName(department.getName()).isPresent()) {
-			throw new ResourceExistException(AppConstant.QUALIFICATION_EXIST);
+			throw new ResourceExistException(AppConstant.DEPARTMENT_EXIST);
 		}
 
 		departmentRepository.save(department);
@@ -104,16 +104,16 @@ public class DepartmentServiceImpl implements DepartmentService {
 	@Override
 	public ApiResponse deleteDepartmentById(Long departmentId, UserPrincipal userPrincipal) {
 		Department department = departmentRepository.findById(departmentId)
-				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.QUALIFICATION_NOT_FOUND + departmentId));
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.DEPARTMENT_NOT_FOUND + departmentId));
 
 		departmentRepository.delete(department);
-		return new ApiResponse(Boolean.TRUE, AppConstant.QUALIFICATION_DELETE_MESSAGE, HttpStatus.OK);
+		return new ApiResponse(Boolean.TRUE, AppConstant.DEPARTMENT_DELETE_MESSAGE, HttpStatus.OK);
 	}
 
 	@Override
 	public ApiResponse deleteAll() {
 		departmentRepository.deleteAll();
-		return new ApiResponse(Boolean.TRUE, AppConstant.QUALIFICATION_DELETE_MESSAGE, HttpStatus.OK);
+		return new ApiResponse(Boolean.TRUE, AppConstant.DEPARTMENT_DELETE_MESSAGE, HttpStatus.OK);
 	}
 
 	@Override
@@ -121,14 +121,14 @@ public class DepartmentServiceImpl implements DepartmentService {
 			UserPrincipal userPrincipal) {
 
 		// if (departmentRepository.existsByName(departmentRequest.getName())) {
-		// throw new ResourceExistException(AppConstant.QUALIFICATION_EXIST);
+		// throw new ResourceExistException(AppConstant.DEPARTMENT_EXIST);
 		// }
 
 		modelMapper.typeMap(DepartmentRequest.class, Department.class)
 				.addMappings(mapper -> mapper.skip(Department::setId));
 
 		Department department = departmentRepository.findById(departmentId)
-				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.QUALIFICATION_NOT_FOUND + departmentId));
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.DEPARTMENT_NOT_FOUND + departmentId));
 
 		modelMapper.map(departmentRequest, department);
 
